@@ -1,14 +1,23 @@
+'use strict';
+
 const express = require('express');
 const config = require('./config');
 const mongoose = require('mongoose');
 
 const app = express();
 
+// Routers
+
+app.use('/styles', express.static('./client/styles/'));
+app.use('/scripts', express.static('./client/scripts/'));
+app.use('/images', express.static('./client/images/'));
+app.use(require('./client/router-client'));
+
 // Server Controls
 
 let server;
 
-function startServer(dbUrl, port = config.PORT) {
+function startServer(dbUrl = config.DATABASE_URL, port = config.PORT) {
 	return new Promise((resolve, reject) => {
 		mongoose.connect(dbUrl, err => {
 			if(err)
@@ -26,7 +35,7 @@ function startServer(dbUrl, port = config.PORT) {
 }
 
 function stopServer() {
-	return server.disconnect()
+	return mongoose.disconnect()
 		.then(() => {
 			return new Promise((resolve, reject) => {
 				console.log('closing MealTracker server.');
@@ -46,6 +55,6 @@ function handleError(err) {
 }
 
 if(require.main === module)
-	startServer(config.DATABASE_URL).catch(handleError);
+	startServer().catch(handleError);
 
 module.exports = { app, startServer, stopServer, handleError };
