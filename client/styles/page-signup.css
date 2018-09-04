@@ -1,6 +1,6 @@
 main {
 	width: 90%;
-	max-width: 800px;
+	max-width: 640px;
 }
 
 form.mt-signup {
@@ -21,4 +21,15 @@ form.mt-signup .mt-signup-messages {
 	text-align: center;
 	color: #A22;
 	padding: 16px;
+}
+
+@media only screen and (min-width: 520px) {
+
+	main {
+		box-shadow: 0 0 2px 2px #AAA;
+		border-radius: 5px;
+		padding: 32px 32px 0px 32px !important;
+		margin: auto;
+	}
+
 }
