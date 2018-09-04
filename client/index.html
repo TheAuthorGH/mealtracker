@@ -4,20 +4,56 @@
 
 <head>
 
+	<title>MealTracker</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Mukta|Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"/>
+	
 	<link rel="stylesheet" href="styles/reset.css" type="text/css">
 	<link rel="stylesheet" href="styles/base.css" type="text/css">
+	<link rel="stylesheet" href="styles/page-index.css" type="text/css">
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	<script src="scripts/base.js"></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 
 <body>
 
 	<header>
-		<h1>MealTracker</h1>
+		<h1><span class="fas fa-utensils"></span> <span class="responsive-widescreen">Meal Tracker</span></h1>
+		<nav class="responsive-widescreen">
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/signup/">Sign Up</a></li>
+				<li><a href="/signin">Sign In</a></li>
+				<li><a href="/dashboard">Dashboard</a></li>
+			</ul>
+		</nav>
+		<nav class="responsive-mobile">
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/signup/">Sign Up</a></li>
+				<li><a href="/signin">Sign In</a></li>
+				<li><a href="/dashboard">Dashboard</a></li>
+			</ul>
+		</nav>
+		<button class="nav-control responsive-mobile" aria-label="navigation menu"><span class="fas fa-bars"></span></button>
 	</header>
 
+	<main role="main">
+
+		<section role="region">
+			<p>MealTracker is a web application that lets you keep an intuitive, image-driven journal of what you eat, when you it eat, and how it contributes to your nutrition.</p>
+			<a class="mt-signup" href="/signup">Get started Today!</a>
+		</section>
+
+	</main>
+		
 </body>
 
 </html>
