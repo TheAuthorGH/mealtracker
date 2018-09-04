@@ -1,15 +1,15 @@
 'use strict';
 
 const chai = require('chai');
-const { app, startServer, stopServer} = require('../server');
 chai.use(require('chai-http'));
+const { app, startServer, stopServer} = require('../server');
 
 const expect = chai.expect;
 
 describe('Meal Tracker Client Gateway', function() {
 	
-	beforeEach(() => startServer());
-	afterEach(() => stopServer());
+	before(() => startServer());
+	after(() => stopServer());
 
 	it('should serve the landing page on /', function() {
 		return chai.request(app)
