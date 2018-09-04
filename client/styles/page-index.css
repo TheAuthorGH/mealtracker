@@ -1,0 +1,22 @@
+main {
+    padding: 16px;
+}
+
+main > section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+a.mt-signup {
+    background-color: #C50;
+	color: #FFF;
+    padding: 16px;
+    margin: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+a.mt-signup:hover, a.mt-signup:focus {
+    background-color: #D62;
+}
