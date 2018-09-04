@@ -2,14 +2,16 @@
 
 const chai = require('chai');
 chai.use(require('chai-http'));
+
+const {TEST_DATABASE_URL} = require('../config');
 const { app, startServer, stopServer} = require('../server');
 
 const expect = chai.expect;
 
 describe('Meal Tracker Client Gateway', function() {
 	
-	before(() => startServer());
-	after(() => stopServer());
+	before(() => startServer(TEST_DATABASE_URL));
+	after(stopServer);
 
 	it('should serve the landing page on /', function() {
 		return chai.request(app)
