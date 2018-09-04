@@ -3,9 +3,10 @@
 const util = require('./api-util');
 const jsonParser = require('body-parser').json();
 const ObjectId = require('mongoose').Types.ObjectId;
-const router = require('express').Router();
-
+const bcrypt = require('bcryptjs');
 const Users = require('./model-users');
+
+const router = require('express').Router();
 
 router.get('/:id', (req, res) => {
 	const id = req.params.id;
@@ -34,6 +35,12 @@ router.post('/', jsonParser, (req, res) => {
 				res.status(400).send('User with that email already exists!');
 				return;
 			}
+			return bcrypt.hash(req.body.password, 10);
+		})
+		.then(hash => {
+			if(!hash)
+				return
+			req.body.password = hash;
 			Users.create(req.body)
 				.then(user => res.status(201).json(user.serialize()))
 				.catch(err => util.handleApiError(err, res));
