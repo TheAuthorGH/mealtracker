@@ -12,6 +12,7 @@ app.use('/styles', express.static('./client/styles/'));
 app.use('/scripts', express.static('./client/scripts/'));
 app.use('/images', express.static('./client/images/'));
 app.use(require('./client/router-client'));
+app.use('/users', require('./api/router-users'));
 
 // Server Controls
 
