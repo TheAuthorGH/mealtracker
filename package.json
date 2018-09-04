@@ -10,6 +10,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "express": "^4.16.3",
+    "faker": "^4.1.0",
     "mongoose": "^5.2.12",
     "npm": "^6.4.1"
   },
