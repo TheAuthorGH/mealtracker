@@ -1,0 +1,32 @@
+main {
+	padding: 16px;
+	width: 90%;
+	max-width: 800px;
+}
+
+h2 {
+	text-transform: uppercase;
+	font-weight: lighter;
+	font-size: 24px;
+	margin-bottom: 16px;
+}
+
+form.mt-signup {
+	display: flex;
+	flex-direction: column;
+}
+
+form.mt-signup label {
+	display: flex;
+	flex-direction: column;
+}
+
+form.mt-signup button {
+	margin: 16px 0;
+}
+
+form.mt-signup .mt-signup-messages {
+	text-align: center;
+	color: #A22;
+	padding: 16px;
+}
