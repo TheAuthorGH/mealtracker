@@ -4,7 +4,7 @@
   "description": "a web application to track what you eat",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --exit"
+    "test": "mocha --exit --timeout 10000"
   },
   "author": "Luis Lau",
   "license": "GPL-3.0",
