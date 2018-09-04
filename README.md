@@ -1,3 +1,14 @@
 # MealTracker
 
-MealTracker is a web application that lets you make an intuitive, image-driven journal of what you eat.
+MealTracker is a web application that lets you keep an intuitive, image-driven journal of what you eat, when you it eat, and how it contributes to your nutrition. 
+
+## About
+
+Developed by Luis Lau.
+Email: theauthorgm@gmail.com
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, you can find it [here](https://www.gnu.org/licenses/>).
