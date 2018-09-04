@@ -12,8 +12,18 @@ router.get('/', (req, res) => {
 
 router.get('/:action', (req, res) => {
 	switch(req.params.action) {
-		case 'register':
-			gotoPage(res, 'register');
+		case 'signup':
+			gotoPage(res, 'signup');
+			break;
+		case 'signin':
+			break;
+		case 'dashboard':
+			gotoPage(res, 'dashboard');
+			break;
+		case 'addentry':
+			break;
+		case 'journal':
+			gotoPage(res, 'journal');
 			break;
 		default:
 			gotoPage(res, 'error');
