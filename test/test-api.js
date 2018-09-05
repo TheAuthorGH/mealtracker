@@ -70,8 +70,8 @@ describe('Meal Tracker API', function() {
 					return Users.findById(res.body.user.id);
 				})
 				.then(user => {
-					user = user.toObject();
 					expect(user).to.not.be.null;
+					user = user.toObject();
 					expect(user).to.include.keys('_id', 'email', 'verified', 'password', 'journals');
 					expect(user.email).to.equal(modelUser.email);
 					expect(user.journals).to.be.an('array');
