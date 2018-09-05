@@ -22,6 +22,15 @@ app.use('/images', express.static('./client/images/'));
 app.use(require('./client/router-client'));
 app.use('/users', require('./api/router-users'));
 app.use('/auth', require('./auth/router-auth'));
+app.use((req, res, next) => {
+	res.status(404);
+	if(req.accepts('html'))
+		res.sendFile(__dirname + '/client/error-404.html');
+	else if(req.accepts('json'))
+		res.json({error: 'Resource not found.'});
+	else
+		res.send('Resource not found.');
+});
 
 // Server Controls
 
