@@ -29,7 +29,7 @@ passport.use(new JwtStrategy({
 	done(null, payload.user);
 }));
 
-const jwtAuth = passport.authenticate('jwt', {session: false});
+const jwtAuth = passport.authenticate('jwt', {session: false, failureRedirect: '/signin'});
 
 passport.use(new LocalStrategy({usernameField: 'email'}, (email, password, callback) => {
 	let user;
