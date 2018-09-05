@@ -35,6 +35,10 @@ input[type="text"], input[type="email"], input[type="password"] {
 	margin: 8px 0;
 }
 
+input.mt-invalid {
+	box-shadow: 0 0 2px 2px #A22;
+}
+
 button {
 	background-color: #C50;
 	color: #FFF;
