@@ -32,8 +32,6 @@ passport.use(new JwtStrategy({
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
 passport.use(new LocalStrategy((email, password, callback) => {
-	console.log('EMAIL: ' + email);
-	console.log('PASSWORD: ' + password);
 	let user;
 	return Users.findOne({email: email})
 		.then(_user => {
