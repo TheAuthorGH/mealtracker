@@ -1,3 +1,5 @@
+'use strict';
+
 let mtNavHidden = false;
 function toggleMobileNav() {
 	const nav = $('nav.responsive-mobile');
