@@ -4,7 +4,7 @@ const util = require('./api-util');
 const jsonParser = require('body-parser').json();
 const ObjectId = require('mongoose').Types.ObjectId;
 const bcrypt = require('bcryptjs');
-const Users = require('./model-users');
+const Users = require('../persistence/model-users');
 
 const router = require('express').Router();
 

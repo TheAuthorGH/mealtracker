@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const faker = require('faker');
 const expect = chai.expect;
 
-const Users = require('../api/model-users');
+const Users = require('../persistence/model-users');
 const {TEST_DATABASE_URL} = require('../config');
 const { app, startServer, stopServer} = require('../server');
 
