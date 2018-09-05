@@ -41,15 +41,19 @@ describe('Meal Tracker API', function() {
 	describe('Users API', function() {
 
 		it('should return a single user on GET /users/:id', function() {
+			let user;
 			return Users.findOne()
-				.then(function(user) {
+				.then(function(_user) {
+					user = _user;
 					return chai.request(app)
 						.get('/users/' + user._id);
 				})
 				.then(function(res) {
 					expect(res).to.have.status(200);
 					expect(res).to.be.json;
-					expect(res.body).to.include.keys('id', 'email', 'journals');
+					expect(res.body.user).to.include.keys('id', 'email', 'journals');
+					expect(res.body.user.id).to.equal(user._id.toString());
+					expect(res.body.user.email).to.equal(user.email);
 				});
 		});
 
@@ -60,17 +64,18 @@ describe('Meal Tracker API', function() {
 				.then(res => {
 					expect(res).to.have.status(201)
 					expect(res).to.be.json;
-					expect(res.body).to.include.keys('id', 'email', 'journals');
-					expect(res.body.email).to.equal(modelUser.email);
-					expect(res.body.journals).to.be.an('array');
-					Users.findById(res.body.id)
-						.then(user => {
-							expect(user).to.not.be.null;
-							expect(user).to.include.keys('email', 'journals', 'password');
-							expect(user.email).to.equal(modelUser.email);
-							expect(user.journals).to.be.an('array');
-						});
+					expect(res.body.user).to.include.keys('id', 'email', 'journals', 'verified');
+					expect(res.body.user.email).to.equal(modelUser.email);
+					expect(res.body.user.journals).to.be.an('array');
+					return Users.findById(res.body.user.id);
 				})
+				.then(user => {
+					user = user.toObject();
+					expect(user).to.not.be.null;
+					expect(user).to.include.keys('_id', 'email', 'verified', 'password', 'journals');
+					expect(user.email).to.equal(modelUser.email);
+					expect(user.journals).to.be.an('array');
+				});
 		});
 
 	});
