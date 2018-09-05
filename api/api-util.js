@@ -2,7 +2,10 @@ module.exports = {
 
 	handleApiError: function(err, res) {
 		console.error(err);
-		res.status(500).send('Internal server error!');
+		res.status(500).send({
+			reason: 'not-specified',
+			message: 'Internal server error!'
+		});
 	},
 
 	objHasFields: function(obj, fields) {
