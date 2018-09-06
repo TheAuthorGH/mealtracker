@@ -43,7 +43,7 @@ passport.use(new LocalStrategy({usernameField: 'email'}, (email, password, callb
 		})
 		.then(valid => {
 			if(valid)
-				return callback(null, user);
+				return callback(null, user.serialize());
 			else
 				return Promise.reject({reason: 'login-invalid'});
 		})
