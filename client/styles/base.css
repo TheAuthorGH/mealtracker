@@ -141,7 +141,7 @@ footer {
 @media only screen and (min-width: 520px) {
 	
 	.responsive-mobile {
-		display: none;
+		display: none !important;
 	}
 
 	/* Navbar */
@@ -185,7 +185,7 @@ footer {
 @media only screen and (max-width: 520px) {
 
 	.responsive-widescreen {
-		display: none;
+		display: none !important;
 	}
 
 }
