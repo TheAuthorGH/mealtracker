@@ -1,0 +1,35 @@
+main {
+	width: 90%;
+	max-width: 640px;
+}
+
+form.mt-signin {
+	display: flex;
+	flex-direction: column;
+}
+
+form.mt-signin label {
+	display: flex;
+	flex-direction: column;
+}
+
+form.mt-signin button {
+	margin: 16px 0;
+}
+
+form.mt-signin .mt-signin-messages {
+	text-align: center;
+	color: #A22;
+	padding: 16px;
+}
+
+@media only screen and (min-width: 520px) {
+
+	main {
+		box-shadow: 0 0 2px 2px #AAA;
+		border-radius: 5px;
+		padding: 32px 32px 0px 32px !important;
+		margin: auto;
+	}
+
+}
