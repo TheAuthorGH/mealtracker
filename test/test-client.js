@@ -31,11 +31,11 @@ describe('Meal Tracker Client Gateway', function() {
 			});
 	});
 
-	it('should serve the error page on any other endpoint', function() {
+	it('should serve the error-404 page on any other endpoint', function() {
 		return chai.request(app)
 			.get('/fake-endpoint')
 			.then(function(res) {
-				expect(res).to.have.status(200);
+				expect(res).to.have.status(404);
 				expect(res).to.be.html;
 			});
 	});
