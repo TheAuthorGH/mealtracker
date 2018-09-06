@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="styles/base.css" type="text/css">
 	<link rel="stylesheet" href="styles/page-signup.css" type="text/css">
 
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -29,13 +30,15 @@
 		<h1><a href="/"><span class="fas fa-utensils"></span> <span class="responsive-widescreen">Meal Tracker</span></a></h1>
 		<nav class="responsive-widescreen">
 			<ul>
-				<li><a href="/signin">Sign In</a></li>
+				<li class="mt-signin"><a href="/signin">Sign In</a></li>
+				<li class="mt-signout"><a href="/signout">Sign Out</a></li>
 				<li><a href="/dashboard">Dashboard</a></li>
 			</ul>
 		</nav>
 		<nav class="responsive-mobile">
 			<ul>
-				<li><a href="/signin">Sign In</a></li>
+				<li class="mt-signin"><a href="/signin">Sign In</a></li>
+				<li class="mt-signout"><a href="/signout">Sign Out</a></li>
 				<li><a href="/dashboard">Dashboard</a></li>
 			</ul>
 		</nav>
