@@ -1,6 +1,5 @@
 'use strict';
 
-const {jwtAuth} = require('../auth/auth');
 const router = require('express').Router();
 
 function gotoPage(res, page) {
@@ -19,7 +18,7 @@ router.get('/signin', (req, res) => {
 	gotoPage(res, 'signin');
 });
 
-router.get('/dashboard', jwtAuth, (req, res) => {
+router.get('/dashboard', (req, res) => {
 	gotoPage(res, 'dashboard');
 });
 
