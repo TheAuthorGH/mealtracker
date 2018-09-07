@@ -15,7 +15,7 @@ function checkAuth() {
 	})
 	.done(res => {
 		Cookies.set('mt_jwt', res);
-		MT_USER = jwt_decode(res).user;
+		MT_USER = jwt_decode(res).user.id;
 	})
 	.fail(res => {
 		if(res.status === 401)
