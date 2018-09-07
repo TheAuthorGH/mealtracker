@@ -10,19 +10,13 @@ const router = require('express').Router();
 
 router.get('/:id', (req, res) => {
 	const id = req.params.id;
-	if(!ObjectId.isValid(id)) {
-		res.status(400).send({
-			reason: 'data-invalid',
-			message: 'Invalid id!'
-		});
-		return;
-	}
+	if(!util.validateId(id)) return;
 	Users.findById(id)
 		.then(user => {
 			if(user)
 				res.status(200).json({user: user.serialize()});
 			else
-				res.status(404).send({
+				res.status(404).json({
 					reason: 'not-found',
 					message: 'User not found.'
 				});
@@ -32,7 +26,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', jsonParser, (req, res) => {
 	if(!util.objHasFields(req.body, ['email', 'password'])) {
-		res.status(400).send({
+		res.status(400).json({
 			reason: 'data-invalid',
 			message: 'Invalid user data.'
 		});
@@ -41,7 +35,7 @@ router.post('/', jsonParser, (req, res) => {
 	Users.findOne({email: req.body.email})
 		.then(user => {
 			if(user) {
-				res.status(400).send({
+				res.status(400).json({
 					reason: 'email-taken',
 					message: 'Email address is already in use!'
 				});
