@@ -57,7 +57,7 @@ describe('Meal Tracker API', function() {
 				});
 		});
 
-		it('shoduld create a new user on POST /users', function() {
+		it('should create a new user on POST /users', function() {
 			return chai.request(app)
 				.post('/users/')
 				.send(modelUser)
