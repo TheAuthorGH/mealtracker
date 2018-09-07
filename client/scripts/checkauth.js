@@ -1,8 +1,8 @@
 let MT_USER;
+const MT_AUTH_BEFORESEND = function(xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + Cookies.get('mt_jwt')) };
 
 function checkAuth() {
-	const jwt = Cookies.get('mt_jwt');
-	if(!jwt) {
+	if(!Cookies.get('mt_jwt')) {
 		window.location.href= '/signin';
 		return;
 	}
@@ -11,7 +11,7 @@ function checkAuth() {
 		url: '/auth/refresh',
 		dataType: 'json',
 		contentType: 'application/json',
-		beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + jwt) }
+		beforeSend: MT_AUTH_BEFORESEND
 	})
 	.done(res => {
 		Cookies.set('mt_jwt', res);
