@@ -1,3 +1,5 @@
+let MT_USER;
+
 function checkAuth() {
 	const jwt = Cookies.get('mt_jwt');
 	if(!jwt) {
@@ -11,10 +13,11 @@ function checkAuth() {
 		contentType: 'application/json',
 		beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + jwt) }
 	})
-	.done((res) => {
+	.done(res => {
 		Cookies.set('mt_jwt', res);
+		MT_USER = jwt_decode(res).user;
 	})
-	.fail((res) => {
+	.fail(res => {
 		if(res.status === 401)
 			window.location.href = '/signin';
 		else
