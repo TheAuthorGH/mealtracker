@@ -4,7 +4,7 @@ const userSchema = mongoose.Schema({
     email: {type: String, required: true, unique: true},
     verified: {type: Boolean, required: true, default: false},
     password: {type: String, required: true},
-    journals: [{type: mongoose.Schema.Types.ObjectId}]
+    journals: [mongoose.Schema.Types.ObjectId]
 });
 
 userSchema.methods.serialize = function() {
