@@ -7,8 +7,8 @@ const Users = require('../persistence/model-users');
 
 const router = require('express').Router();
 
-router.get('/:id', (req, res) => {
-	const id = req.params.id;
+router.get('/', (req, res) => {
+	const id = req.query.id;
 	if(!util.validateId(id, res)) return;
 	Users.findById(id)
 		.then(user => {
