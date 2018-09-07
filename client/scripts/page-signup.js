@@ -11,6 +11,8 @@ function handleSignupControls() {
 		const email = $('#mt-signup-email').val();
 		const password = $('#mt-signup-password').val();
 		
+		messages.text('Please wait...');
+
 		// Validate Input
 		if(password !== $('#mt-signup-password-confirm').val()) {
 			$('#mt-signup-password, #mt-signup-password-confirm').addClass('mt-invalid');

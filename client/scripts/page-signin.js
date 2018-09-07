@@ -9,6 +9,8 @@ function handleSigninControls() {
 		const email = $('#mt-signin-email').val();
 		const password = $('#mt-signin-password').val();
 
+		messages.text('Please wait...');
+
 		$.ajax({
 			type: 'POST',
 			url: '/auth/login',
