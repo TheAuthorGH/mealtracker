@@ -24,6 +24,11 @@ h2 {
 
 a {
 	text-decoration: none;
+	color: #D62;
+}
+
+a:hover, a:focus {
+	color: #E95;
 }
 
 /* General */
@@ -72,6 +77,10 @@ header {
 
 header h1 {
 	font-size: 24px;
+}
+
+header h1 > a {
+	color: #FFF !important;
 }
 
 header nav {
@@ -172,7 +181,7 @@ footer {
 	}
 
 	header nav ul > li > a {
-		color: #FFF;
+		color: #FFF !important;
 		padding: 16px;
 	}
 

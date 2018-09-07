@@ -23,6 +23,12 @@ form.mt-signin .mt-signin-messages {
 	padding: 16px;
 }
 
+p.mt-signup {
+	text-align: center;
+	color: #888;
+	margin-bottom: 16px;
+}
+
 @media only screen and (min-width: 520px) {
 
 	main {
