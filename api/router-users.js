@@ -2,7 +2,6 @@
 
 const util = require('./api-util');
 const jsonParser = require('body-parser').json();
-const ObjectId = require('mongoose').Types.ObjectId;
 const bcrypt = require('bcryptjs');
 const Users = require('../persistence/model-users');
 
@@ -10,7 +9,7 @@ const router = require('express').Router();
 
 router.get('/:id', (req, res) => {
 	const id = req.params.id;
-	if(!util.validateId(id)) return;
+	if(!util.validateId(id, res)) return;
 	Users.findById(id)
 		.then(user => {
 			if(user)

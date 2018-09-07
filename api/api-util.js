@@ -21,7 +21,7 @@ module.exports = {
 	},
 
 	validateId: function(id, res) {
-		if(ObjectId.isValid(id)) {
+		if(!ObjectId.isValid(id)) {
 			res.status(400).json({
 				reason: 'data-invalid',
 				message: 'Invalid id!'
