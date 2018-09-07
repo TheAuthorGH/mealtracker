@@ -26,4 +26,8 @@ router.get('/dashboard', (req, res) => {
 	gotoPage(res, 'dashboard');
 });
 
+router.get('/error', (req, res) => {
+	gotoPage(res, 'error');
+})
+
 module.exports = router;
