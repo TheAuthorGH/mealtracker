@@ -1,0 +1,51 @@
+main {
+	width: 100%;
+	max-width: 640px;
+}
+
+.mt-dashboard-journals {
+	display: flex;
+	flex-direction: column;
+}
+
+.mt-dashboard-journals form {
+	border-bottom: 2px #AAA solid;
+	margin-bottom: 4px;
+	padding-bottom: 16px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.mt-dashboard-journals form > * {
+	width: 100%;
+}
+
+.mt-dashboard-journals ul {
+	display: flex;
+	flex-direction: column;
+}
+
+.mt-dashboard-journals ul > li {
+	padding: 8px;
+	margin: 8px 0;
+	box-shadow: 0 0 1px 1px #AAA;
+	border-radius: 5px;
+
+	display: flex;
+	justify-content: space-between;
+}
+
+@media only screen and (min-width: 520px) {
+
+	.mt-dashboard-journals form {
+		flex-direction: row;
+		align-items: flex-end;
+	}
+
+	.mt-dashboard-journals form > * {
+		margin: 0 8px;
+	}
+
+}
