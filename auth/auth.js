@@ -15,7 +15,7 @@ function validatePassword(user, password) {
 
 function createAuthToken(user) {
 	return jwt.sign({user: {id: user.id}}, config.JWT_SECRET, {
-		subject: user.id,
+		subject: user.id.toString(),
 		expiresIn: config.JWT_EXPIRY,
 		algorithm: 'HS256'
 	});
