@@ -34,7 +34,6 @@ router.get('/', (req, res) => {
 			.skip(page * perpage)
 			.limit(perpage)
 			.then(journals => {
-				console.log(journals);
 				if(journals) {
 					res.status(200).json({journals: journals.map(j => j.serialize())});
 				} else {
