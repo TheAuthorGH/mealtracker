@@ -40,13 +40,13 @@ describe('Meal Tracker API', function() {
 
 	describe('Users API', function() {
 
-		it('should return a single user on GET /users/:id', function() {
+		it('should return a single user on GET /users?id=...', function() {
 			let user;
 			return Users.findOne()
 				.then(function(_user) {
 					user = _user;
 					return chai.request(app)
-						.get('/users/' + user._id);
+						.get('/users?id=' + user._id);
 				})
 				.then(function(res) {
 					expect(res).to.have.status(200);
