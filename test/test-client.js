@@ -31,6 +31,24 @@ describe('Meal Tracker Client Gateway', function() {
 			});
 	});
 
+	it('should serve the dashboard page on /dashboard', function() {
+		return chai.request(app)
+			.get('/dashboard')
+			.then(function(res) {
+				expect(res).to.have.status(200);
+				expect(res).to.be.html;
+			});
+	});
+
+	it('should serve the default error page on /error', function() {
+		return chai.request(app)
+			.get('/error')
+			.then(function(res) {
+				expect(res).to.have.status(200);
+				expect(res).to.be.html;
+			});
+	});
+
 	it('should serve the error-404 page on any other endpoint', function() {
 		return chai.request(app)
 			.get('/fake-endpoint')
