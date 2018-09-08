@@ -45,6 +45,12 @@ router.post('/', jsonParser, (req, res) => {
 		.then(hash => {
 			if(!hash)
 				return
+			if(!req.body.email.includes('@')) {
+				res.status(400).json({
+					reason: 'data-invalid',
+					message: 'Invalid email address.'
+				});
+			}
 			req.body.password = hash;
 			Users.create(req.body)
 				.then(user => res.status(201).json({user: user.serialize()}))
