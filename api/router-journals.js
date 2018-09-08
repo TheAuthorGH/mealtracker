@@ -68,16 +68,13 @@ router.post('/', jsonParser, (req, res) => {
 			return Users.findById(req.body.user);
 		})
 		.then(user => {
-			if(user) {
-				user.journals.push(journal._id);
-				user.save();
+			if(user)
 				res.status(201).json({journal: journal.serialize()});
-			} else {
+			else
 				res.status(400).json({
 					reason: 'not-found',
 					message: 'Target user not found'
 				});
-			}
 		});
 });
 

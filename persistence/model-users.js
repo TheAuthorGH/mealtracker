@@ -3,16 +3,14 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
     email: {type: String, required: true, unique: true},
     verified: {type: Boolean, required: true, default: false},
-    password: {type: String, required: true},
-    journals: [mongoose.Schema.Types.ObjectId]
+    password: {type: String, required: true}
 });
 
 userSchema.methods.serialize = function() {
     return {
         id: this._id,
         email: this.email,
-        verified: this.verified,
-        journals: this.journals
+        verified: this.verified
     };
 };
 
