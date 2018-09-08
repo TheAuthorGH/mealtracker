@@ -16,9 +16,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="scripts/jwt-decode-min.js"></script>
 
 	<script src="scripts/base.js"></script>
 	<script src="scripts/checkauth.js"></script>
+	<script src="scripts/page-dashboard.js"></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -26,7 +28,7 @@
 
 <body>
 
-	<header role="banner" aria-live="assertive">
+	<header role="banner" aria-live="polite">
 		<h1><a href="/"><span class="fas fa-utensils"></span> <span class="responsive-widescreen">Meal Tracker</span></a></h1>
 		<nav class="responsive-widescreen">
 			<ul>
@@ -48,6 +50,10 @@
 	<main role="main" aria-live="assertive">
 
 		<h2>Journals</h2>
+		<section class="mt-dashboard-journals">
+			<form class="mt-dashboard-addjournal"><input type="text" placeholder="Journal 1" required> <button type="submit">Add</button></form>
+			<ul></ul>
+		</section>
 
 	</main>
 
