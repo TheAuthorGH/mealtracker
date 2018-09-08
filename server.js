@@ -21,6 +21,7 @@ app.use('/scripts', express.static('./client/scripts/'));
 app.use('/images', express.static('./client/images/'));
 app.use(require('./client/router-client'));
 app.use('/users', require('./api/router-users'));
+app.use('/journals', require('./api/router-journals'));
 app.use('/auth', require('./auth/router-auth'));
 app.use((req, res, next) => {
 	res.status(404);
