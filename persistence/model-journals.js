@@ -13,14 +13,11 @@ const journalSchema = mongoose.Schema({
 
 journalSchema.methods.serialize = function() {
 	return {
+		id: this._id,
+		user: this.user,
 		title: this.title,
-		entryAmount: this.entries.length,
-		created: this.created
+		entryAmount: this.entries.length
 	};
-};
-
-journalSchema.methods.entryPage = function(perPage = 5, page = 0) {
-	return this.entries.slice(page * perPage, perPage * (page + 1));
 };
 
 const Journals = mongoose.model('Journal', journalSchema);
