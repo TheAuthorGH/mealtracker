@@ -3,12 +3,13 @@
 const chai = require('chai');
 chai.use(require('chai-http'));
 
+const Users = require('../persistence/model-users');
 const {TEST_DATABASE_URL} = require('../config');
 const { app, startServer, stopServer} = require('../server');
 
 const expect = chai.expect;
 
-describe('Meal Tracker Client Gateway', function() {
+describe('MealTracker Client Gateway', function() {
 	
 	before(() => startServer(TEST_DATABASE_URL));
 	after(stopServer);

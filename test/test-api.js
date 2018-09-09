@@ -43,7 +43,7 @@ function dropDb() {
 	return mongoose.connection.dropDatabase();
 }
 
-describe('Meal Tracker API', function() {
+describe('MealTracker API', function() {
 
 	before(() => startServer(TEST_DATABASE_URL));
 	beforeEach(() => populateDb());
