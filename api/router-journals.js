@@ -62,7 +62,7 @@ router.post('/', jsonParser, (req, res) => {
 		});
 		return;
 	}
-	if(!(util.validateId(req.body.user))) return;
+	if(!(util.validateId(req.body.user, res))) return;
 	let journal;
 	Journals.create(req.body)
 		.then(_journal => {
