@@ -25,27 +25,40 @@ function dropDb() {
 
 describe('MealTracker Auth API', function() {
 
+	let jwt;
+
 	before(() => startServer(TEST_DATABASE_URL));
 	beforeEach(populateDb);
 	afterEach(dropDb);
 	after(stopServer);
 
-	it('Must return a JWT on POST /login if provided with correct login data', function() {
+	it('should return a JWT on POST /login if provided with correct login data', function() {
 		return chai.request(app)
 			.post('/auth/login')
 			.send(userData)
 			.then(res => {
 				expect(res).to.have.status(200);
 				expect(res).to.be.json;
+				jwt = res.body;
 			});
 	});
 
-	it('Must deny the JWT on POST /login if provided with incorrect login data', function() {
+	it('should deny the JWT on POST /login if provided with incorrect login data', function() {
 		return chai.request(app)
 			.post('/auth/login')
 			.send(wrongUserData)
 			.then(res => {
 				expect(res).to.have.status(401);
+			});
+	});
+
+	it('should return a new JWT on GET /refresh if provided with an old JWT', function() {
+		return chai.request(app)
+			.get('/auth/refresh')
+			.set('Authorization', 'Bearer ' + jwt)
+			.then(res => {
+				expect(res).to.have.status(200);
+				expect(res).to.be.json;
 			});
 	});
 
