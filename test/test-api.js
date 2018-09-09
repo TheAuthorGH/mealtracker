@@ -117,6 +117,10 @@ describe('MealTracker API', function() {
 				.send(modelJournal)
 				.then(function(res) {
 					expect(res).to.have.status(201);
+					expect(res).to.be.json;
+					expect(res.body.journal).to.include.keys('id', 'user', 'title', 'entryAmount');
+					expect(res.body.journal.user).to.equal(modelJournal.user.toString());
+					expect(res.body.journal.title).to.equal(modelJournal.title);
 				});
 		});
 
