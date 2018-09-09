@@ -1,5 +1,6 @@
 'use strict';
 
+const config = require('../config');
 const util = require('./api-util');
 const {jwtAuth} = require('../auth/auth');
 const jsonParser = require('body-parser').json();
@@ -8,7 +9,8 @@ const Users = require('../persistence/model-users');
 
 const router = require('express').Router();
 
-router.use('/', jwtAuth);
+if(config.ENABLE_AUTH)
+	router.use(jwtAuth);
 
 router.get('/', (req, res) => {
 	const id = req.query.id;
