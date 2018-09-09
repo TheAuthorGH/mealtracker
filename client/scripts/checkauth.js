@@ -1,4 +1,3 @@
-let MT_USER;
 const MT_AUTH_BEFORESEND = function(xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + Cookies.get('mt_jwt')) };
 
 function checkAuth() {
@@ -15,7 +14,7 @@ function checkAuth() {
 	})
 	.done(res => {
 		Cookies.set('mt_jwt', res, {expires: 1});
-		MT_USER = jwt_decode(res).user.id;
+		Cookies.set('mt_user', jwt_decode(res).user.id, {expires: 1});
 	})
 	.fail(res => {
 		if(res.status === 401)
