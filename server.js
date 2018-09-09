@@ -71,7 +71,7 @@ function stopServer() {
 }
 
 function handleError(err) {
-	console.log(err);
+	console.error(err);
 }
 
 if(require.main === module)
