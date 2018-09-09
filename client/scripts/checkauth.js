@@ -14,7 +14,7 @@ function checkAuth() {
 		beforeSend: MT_AUTH_BEFORESEND
 	})
 	.done(res => {
-		Cookies.set('mt_jwt', res);
+		Cookies.set('mt_jwt', res, {expires: 1});
 		MT_USER = jwt_decode(res).user.id;
 	})
 	.fail(res => {

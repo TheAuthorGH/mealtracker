@@ -19,7 +19,7 @@ function handleSigninControls() {
 			data: JSON.stringify({email: email, password: password})
 		})
 		.done(res => {
-			Cookies.set('mt_jwt', res);
+			Cookies.set('mt_jwt', res, {expires: 1});
 			window.location.href = '/dashboard';
 		})
 		.fail(res => {
