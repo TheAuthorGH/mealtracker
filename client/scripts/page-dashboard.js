@@ -6,7 +6,7 @@ function handleDashboardControls() {
 			url: '/journals',
 			dataType: 'json',
 			contentType: 'application/json',
-			data: JSON.stringify({user: MT_USER, title: $('.mt-dashboard-addjournal input').val()}),
+			data: JSON.stringify({user: Cookies.get('mt_user'), title: $('.mt-dashboard-addjournal input').val()}),
 			beforeSend: MT_AUTH_BEFORESEND
 		})
 		.done(updateJournals)
@@ -17,7 +17,7 @@ function handleDashboardControls() {
 function updateJournals() {
 	$.ajax({
 		type: 'GET',
-		url: `/journals?userid=${MT_USER}`,
+		url: `/journals?userid=${Cookies.get('mt_user')}`,
 		contentType: 'application/json',
 		beforeSend: MT_AUTH_BEFORESEND
 	})
