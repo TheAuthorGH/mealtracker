@@ -15,7 +15,7 @@ const {TEST_DATABASE_URL} = require('../config');
 const { app, startServer, stopServer } = require('../server');
 
 const modelUser = fakeUser();
-const modelJournal = fakeJournal(modelUser);
+const modelJournal = fakeJournal();
 
 function fakeUser() {
 	return {
@@ -36,7 +36,9 @@ function populateDb() {
 	for(let i = 0; i < 10; i++)
 		users.push(fakeUser());
 	return Users.insertMany(users)
-		.then(users => Journals.insertMany(users.map(u => fakeJournal(u._id))));
+		.then(users => Journals.insertMany(users.map(u => fakeJournal(u._id))))
+		.then(() => Users.findOne())
+		.then(user => modelJournal.user = user._id);
 }
 
 function dropDb() {
@@ -74,7 +76,7 @@ describe('MealTracker API', function() {
 				.post('/users')
 				.send(modelUser)
 				.then(function(res) {
-					expect(res).to.have.status(201)
+					expect(res).to.have.status(201);
 					expect(res).to.be.json;
 					expect(res.body.user).to.include.keys('id', 'email', 'verified');
 					expect(res.body.user.email).to.equal(modelUser.email);
@@ -104,6 +106,17 @@ describe('MealTracker API', function() {
 					expect(res).to.have.status(200);
 					expect(res).to.be.json;
 					expect(res.body.journal).to.include.keys('id', 'user', 'title', 'entryAmount');
+					expect(res.body.journal.user).to.equal(journal.user.toString());
+					expect(res.body.journal.title).to.equal(journal.title.toString());
+				});
+		});
+
+		it('should create a journal on POST /journals', function() {
+			return chai.request(app)
+				.post('/journals')
+				.send(modelJournal)
+				.then(function(res) {
+					expect(res).to.have.status(201);
 				});
 		});
 
