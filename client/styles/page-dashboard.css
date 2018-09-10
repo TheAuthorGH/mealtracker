@@ -34,7 +34,12 @@ main {
 	border-radius: 5px;
 
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
+}
+
+.mt-dashboard-journals ul > li button {
+	padding: 8px;
 }
 
 @media only screen and (min-width: 520px) {
