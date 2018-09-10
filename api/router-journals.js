@@ -73,10 +73,41 @@ router.post('/', jsonParser, (req, res) => {
 			if(user)
 				res.status(201).json({journal: journal.serialize()});
 			else
-				res.status(400).json({
+				res.status(404).json({
 					reason: 'not-found',
 					message: 'Target user not found'
 				});
+		});
+});
+
+router.get('/entries', (req, res) => {
+	const id = req.query.id;
+	const page = req.query.page;
+	const perpage = req.query.perpage;
+	if(!util.validateId(id, res)) return;
+	Journals.findById(id)
+		.then(journal => {
+			if(journal)
+				res.status(200).json(journal.page(page, perpage));
+			else
+				res.status(404).json({
+					reason: 'not-found',
+					message: 'Journal not found'
+				});
+		});
+});
+
+router.post('/entries', jsonParser, (req, res) => {
+	const id = req.query.id;
+	if(!util.validateId(id, res)) return;
+	Journals.findById(id)
+		.then(journal => {
+			journal.entries.push({
+				title: req.body.title, 
+				date: Date.parse(req.body.date) || Date.now()
+			});
+			journal.save();
+			res.status(201);
 		});
 });
 
