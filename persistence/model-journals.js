@@ -20,6 +20,10 @@ journalSchema.methods.serialize = function() {
 	};
 };
 
+journalSchema.methods.page = function(page = 0, perpage = 5) {
+	return this.entries.slice(page * perpage, page * (perpage + 1));
+}
+
 const Journals = mongoose.model('Journal', journalSchema);
 
 module.exports = Journals;
