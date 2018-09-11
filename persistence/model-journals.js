@@ -5,6 +5,14 @@ const entrySchema = mongoose.Schema({
 	date: {type: Date, required: true}
 });
 
+entrySchema.methods.serialize = function() {
+	return {
+		id: this._id,
+		title: this.title,
+		date: this.date.toISOString()
+	}
+}
+
 const journalSchema = mongoose.Schema({
 	user: {type: mongoose.Schema.Types.ObjectId, required: true},
 	title: {type: String, required: true},
@@ -20,8 +28,8 @@ journalSchema.methods.serialize = function() {
 	};
 };
 
-journalSchema.methods.page = function(page = 0, perpage = 5) {
-	return this.entries.slice(page * perpage, page * (perpage + 1));
+journalSchema.methods.paginate = function(page = 0, perpage = 5) {
+	return this.entries.map(e => e.serialize()).slice(page * perpage, perpage * (page + 1));
 }
 
 const Journals = mongoose.model('Journal', journalSchema);
