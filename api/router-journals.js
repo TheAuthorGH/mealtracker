@@ -82,13 +82,13 @@ router.post('/', jsonParser, (req, res) => {
 
 router.get('/entries', (req, res) => {
 	const id = req.query.id;
-	const page = req.query.page;
-	const perpage = req.query.perpage;
+	const page = req.query.page || 0;
+	const perpage = req.query.perpage || 5;
 	if(!util.validateId(id, res)) return;
 	Journals.findById(id)
 		.then(journal => {
 			if(journal)
-				res.status(200).json(journal.page(page, perpage));
+				res.status(200).json(journal.paginate(page, perpage));
 			else
 				res.status(404).json({
 					reason: 'not-found',
@@ -103,11 +103,11 @@ router.post('/entries', jsonParser, (req, res) => {
 	Journals.findById(id)
 		.then(journal => {
 			journal.entries.push({
-				title: req.body.title, 
-				date: Date.parse(req.body.date) || Date.now()
+				title: req.body.title,
+				date: req.body.date ? new Date(req.body.date) : new Date()
 			});
 			journal.save();
-			res.status(201);
+			res.status(201).json(journal.entries[journal.entries.length - 1]);
 		});
 });
 
