@@ -28,6 +28,7 @@ main {
 }
 
 .mt-dashboard-journals ul > li {
+	cursor: pointer;
 	padding: 8px;
 	margin: 8px 0;
 	box-shadow: 0 0 1px 1px #AAA;
@@ -36,6 +37,10 @@ main {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.mt-dashboard-journals ul > li:hover {
+	box-shadow: 0 0 2px 2px #D62;
 }
 
 .mt-dashboard-journals ul > li button {
