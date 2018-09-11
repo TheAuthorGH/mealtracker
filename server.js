@@ -19,10 +19,13 @@ app.use(function(req, res, next) {
 app.use('/styles', express.static('./client/styles/'));
 app.use('/scripts', express.static('./client/scripts/'));
 app.use('/images', express.static('./client/images/'));
+
 app.use('/users', require('./api/router-users'));
 app.use('/journals', require('./api/router-journals'));
 app.use('/auth', require('./auth/router-auth'));
+
 app.use(require('./client/router-client'));
+
 app.use((req, res, next) => {
 	res.status(404);
 	if(req.accepts('html'))

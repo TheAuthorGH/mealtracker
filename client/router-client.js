@@ -1,8 +1,12 @@
-const router = require('express').Router();
+const express = require('express');
+
+const router = express.Router();
 
 router.get('/', (req, res) => {
 	res.sendFile(`${__dirname}/index.html`);
-})
+});
+
+router.use('/journal', express.static('./client/journal.html'));
 
 router.get('/:action', (req, res, next) => {
 	switch(req.params.action) {
