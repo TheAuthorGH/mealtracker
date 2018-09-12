@@ -40,7 +40,7 @@ function fakeJournalEntry() {
 
 function populateDb() {
 	const users = [];
-	for(let i = 0; i < 10; i++)
+	for(let i = 0; i < 5; i++)
 		users.push(fakeUser());
 	return Users.insertMany(users)
 		.then(users => Journals.insertMany(users.map(u => fakeJournal(u._id))))
