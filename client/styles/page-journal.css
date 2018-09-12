@@ -1,0 +1,38 @@
+main {
+	width: 100%;
+	max-width: 640px;
+}
+
+form.mt-journal-addentry {
+	display: flex;
+	flex-direction: column;
+}
+
+.mt-journal-entries > ul {
+	margin: 16px 0;
+	border-radius: 5px;
+	box-shadow: 0 0 2px 2px #AAA;
+	overflow: hidden;
+}
+
+.mt-journal-entries > ul > li {
+	padding: 16px;
+
+	display: flex;
+	justify-content: space-between;
+}
+
+.mt-journal-entries > ul > li:nth-child(even) {
+	background-color: #EFEFEF;
+}
+
+.mt-journal-entries > ul > li:hover {
+	background-color: #FFF0C0;
+}
+
+.mt-journal-noentries > p {
+	color: #888;
+	font-size: 20px;
+	text-align: center;
+	padding: 8px;
+}
