@@ -54,7 +54,7 @@ describe('MealTracker API', function() {
 
 	describe('Users API', function() {
 
-		it('should return a single user on GET /users?id=...', function() {
+		it('should return a single user on GET /?id=...', function() {
 			let user;
 			return Users.findOne()
 				.then(function(_user) {
@@ -71,7 +71,7 @@ describe('MealTracker API', function() {
 				});
 		});
 
-		it('should create a new user on POST /users', function() {
+		it('should create a new user on POST /', function() {
 			return chai.request(app)
 				.post('/users')
 				.send(modelUser)
@@ -94,7 +94,7 @@ describe('MealTracker API', function() {
 
 	describe('Journals API', function() {
 
-		it('should return a single journal on GET /journals?id=...', function() {
+		it('should return a single journal on GET /?id=...', function() {
 			let journal;
 			return Journals.findOne()
 				.then(function(_journal) {
@@ -111,7 +111,7 @@ describe('MealTracker API', function() {
 				});
 		});
 
-		it('should create a journal on POST /journals', function() {
+		it('should create a journal on POST /', function() {
 			return chai.request(app)
 				.post('/journals')
 				.send(modelJournal)
