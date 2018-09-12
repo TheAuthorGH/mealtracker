@@ -77,7 +77,8 @@ router.post('/', jsonParser, (req, res) => {
 					reason: 'not-found',
 					message: 'Target user not found'
 				});
-		});
+		})
+		.catch(err => util.handleApiError(err, res));;
 });
 
 router.get('/entries', (req, res) => {
@@ -94,7 +95,8 @@ router.get('/entries', (req, res) => {
 					reason: 'not-found',
 					message: 'Journal not found'
 				});
-		});
+		})
+		.catch(err => util.handleApiError(err, res));;
 });
 
 router.post('/entries', jsonParser, (req, res) => {
@@ -107,8 +109,9 @@ router.post('/entries', jsonParser, (req, res) => {
 				date: req.body.date ? new Date(req.body.date) : new Date()
 			});
 			journal.save();
-			res.status(201).json(journal.entries[journal.entries.length - 1]);
-		});
+			res.status(201).json({entry: journal.entries[journal.entries.length - 1].serialize()});
+		})
+		.catch(err => util.handleApiError(err, res));;
 });
 
 module.exports = router;
