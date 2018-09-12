@@ -1,4 +1,7 @@
 function handleDashboardControls() {
+
+	// Journals
+
 	$('.mt-dashboard-addjournal').submit(function(evt) {
 		evt.preventDefault();
 		const input = $('.mt-dashboard-addjournal input');
@@ -16,6 +19,10 @@ function handleDashboardControls() {
 		})
 		.fail(() => window.location.href = '/error');
 	});
+
+	$('.mt-dashboard-journals ul').on('click', 'li', function() {
+		window.location.href = '/journal?id=' + $(this).attr('mt-journal-id');
+	});
 }
 
 function updateJournals() {
@@ -28,10 +35,16 @@ function updateJournals() {
 	.done(res => {
 		const list = $('.mt-dashboard-journals ul');
 		list.empty();
-		for(let j of res.journals)
+		const journals = res.journals.sort((j, k) => {
+			if(j.title > k.title) return 1; 
+			else if(j.title < k.title) return -1;
+			else return 0;
+		});
+		for(let j of journals)
 			list.append(`
 				<li mt-journal-id="${j.id}">
 					<span>${j.title}</span>
+					<button class="mt-journal-addentry"><span class="fas fa-fw fa-pencil-alt"></span></button>
 				</li>`);
 	})
 	.fail(() => window.location.href = '/error');
