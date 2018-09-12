@@ -32,3 +32,19 @@ $(function() {
 	handleControls();
 	addAccountControls();
 });
+
+// Util
+
+function formatDate(date) {
+	const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+	const diff = (new Date() - date) / 60000; // in minutes
+	if(diff < 2)
+		return 'Just now';
+	if(diff < 60)
+		return `${Math.floor(diff)} minutes ago`;
+	if(diff < 120)
+		return 'One hour ago';
+	if(diff < 1440)
+		return `${Math.floor(diff / 60)} hours ago`;
+	return `${months[getMonth()]} ${date.getDay()}, ${date.getFullYear()}`;
+}
