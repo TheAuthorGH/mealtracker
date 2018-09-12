@@ -16,6 +16,7 @@ const { app, startServer, stopServer } = require('../server');
 
 const modelUser = fakeUser();
 const modelJournal = fakeJournal();
+const modelEntry = fakeJournalEntry();
 
 function fakeUser() {
 	return {
@@ -27,6 +28,12 @@ function fakeUser() {
 function fakeJournal(userid) {
 	return {
 		user: userid,
+		title: faker.lorem.words()
+	};
+}
+
+function fakeJournalEntry() {
+	return {
 		title: faker.lorem.words()
 	};
 }
@@ -54,7 +61,7 @@ describe('MealTracker API', function() {
 
 	describe('Users API', function() {
 
-		it('should return a single user on GET /?id=...', function() {
+		it('should return a single user on GET /?id=<userid>', function() {
 			let user;
 			return Users.findOne()
 				.then(function(_user) {
@@ -94,7 +101,7 @@ describe('MealTracker API', function() {
 
 	describe('Journals API', function() {
 
-		it('should return a single journal on GET /?id=...', function() {
+		it('should return a single journal on GET /?id=<journalid>', function() {
 			let journal;
 			return Journals.findOne()
 				.then(function(_journal) {
@@ -121,6 +128,34 @@ describe('MealTracker API', function() {
 					expect(res.body.journal).to.include.keys('id', 'user', 'title', 'entryAmount');
 					expect(res.body.journal.user).to.equal(modelJournal.user.toString());
 					expect(res.body.journal.title).to.equal(modelJournal.title);
+				});
+		});
+
+		it('should return paginated entries on /entries?id=<journalid>', function() {
+			return Journals.findOne()
+				.then(function(journal) {
+					return chai.request(app)
+						.get('/journals/entries?id=' + journal._id);
+				})
+				.then(function(res) {
+					expect(res).to.have.status(200);
+					expect(res).to.be.json;
+					expect(res.body).to.be.an('array');
+				});
+		});
+
+		it('should create a journal entry on POST /entries?id=<journalid>', function() {
+			return Journals.findOne()
+				.then(function(journal) {
+					return chai.request(app)
+						.post('/journals/entries?id=' + journal._id)
+						.send(modelEntry);
+				})
+				.then(function(res) {
+					expect(res).to.have.status(201);
+					expect(res).to.be.json;
+					expect(res.body.entry).to.include.keys('id', 'title', 'date');
+					expect(res.body.entry.title).to.equal(modelEntry.title);
 				});
 		});
 
