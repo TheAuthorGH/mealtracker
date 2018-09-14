@@ -4,8 +4,16 @@ main {
 }
 
 form.mt-journal-addentry {
+	box-shadow: 0 0 2px 2px #AAA;
+	border-radius: 5px;
+	padding: 8px;
+
 	display: flex;
 	flex-direction: column;
+}
+
+form.mt-journal-addentry > * {
+	margin: 4px 0;
 }
 
 .mt-journal-entries > ul {
