@@ -46,5 +46,5 @@ function formatDate(date) {
 		return 'One hour ago';
 	if(diff < 1440)
 		return `${Math.floor(diff / 60)} hours ago`;
-	return `${months[getMonth()]} ${date.getDay()}, ${date.getFullYear()}`;
+	return `${months[date.getMonth()]} ${date.getDay()}, ${date.getFullYear()}`;
 }
