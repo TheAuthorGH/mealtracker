@@ -6,7 +6,7 @@ main {
 form.mt-journal-addentry {
 	box-shadow: 0 0 2px 2px #AAA;
 	border-radius: 5px;
-	padding: 8px;
+	padding: 16px;
 
 	display: flex;
 	flex-direction: column;
