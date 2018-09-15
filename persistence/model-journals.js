@@ -2,14 +2,16 @@ const mongoose = require('mongoose');
 
 const entrySchema = mongoose.Schema({
 	title: {type: String, required: true},
-	date: {type: Date, required: true}
+	date: {type: Date, required: true},
+	description: {type: String, default: 'No description.'}
 });
 
 entrySchema.methods.serialize = function() {
 	return {
 		id: this._id,
 		title: this.title,
-		date: this.date.toISOString()
+		date: this.date.toISOString(),
+		description: this.description
 	}
 }
 
