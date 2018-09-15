@@ -104,10 +104,15 @@ router.post('/entries', jsonParser, (req, res) => {
 	if(!util.validateId(id, res)) return;
 	Journals.findById(id)
 		.then(journal => {
-			journal.entries.push({
-				title: req.body.title,
-				date: req.body.date ? new Date(req.body.date) : new Date()
-			});
+			if(!util.objHasFields(req.body, ['title'])) {
+				res.status(400).json({
+					reason: 'data-invalid',
+					message: 'Invalid entry data.'
+				});
+				return;
+			}
+			req.body.date = req.body.date ? new Date(req.body.date) : new Date();
+			journal.entries.push(req.body);
 			journal.save();
 			res.status(201).json({entry: journal.entries[journal.entries.length - 1].serialize()});
 		})
