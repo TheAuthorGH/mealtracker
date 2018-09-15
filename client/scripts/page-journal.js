@@ -5,7 +5,18 @@ const MT_JOURNAL = new URL(window.location).searchParams.get('id');
 if(MT_JOURNAL === null)
 	window.location.href = '/dashboard';
 
+function clearEntryForm() {
+	$('.mt-journal-addentry input').val('');
+}
+
 function handleJournalControls() {
+	$('.mt-journal-addentry').hide().prop('hidden', true);
+	$('.mt-journal-addentry-open').click(function() {
+		$('.mt-journal-addentry').show().prop('hidden', false);
+		$('.mt-journal-noentries, .mt-journal-entries').hide().prop('hidden', true);
+		clearEntryForm();
+	});
+
 	$('.mt-journal-addentry').submit(function(evt) {
 		evt.preventDefault();
 		const title = $('#mt-journal-addentry-title');
@@ -20,7 +31,7 @@ function handleJournalControls() {
 			})
 		})
 		.done(() => {
-			title.val('');
+			clearEntryForm();
 			updateEntries();
 		})
 		.fail(() => window.location.href = '/error');
@@ -28,8 +39,7 @@ function handleJournalControls() {
 }
 
 function updateEntries() {
-	$('.mt-journal-noentries').hide();
-	$('.mt-journal-entries').hide();
+	$('.mt-journal-noentries, .mt-journal-entries, .mt-journal-addentry').hide().prop('hidden', true);
 	$('.mt-journal-entries > ul').empty();
 	$.ajax({
 		type: 'GET',
