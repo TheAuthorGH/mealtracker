@@ -6,7 +6,7 @@ if(MT_JOURNAL === null)
 	window.location.href = '/dashboard';
 
 function clearEntryForm() {
-	$('.mt-journal-addentry input').val('');
+	$('.mt-journal-addentry').find('input, textarea').val('');
 }
 
 function handleJournalControls() {
@@ -19,7 +19,6 @@ function handleJournalControls() {
 
 	$('.mt-journal-addentry').submit(function(evt) {
 		evt.preventDefault();
-		const title = $('#mt-journal-addentry-title');
 		$.ajax({
 			type: 'POST',
 			url: `/journals/entries?id=${MT_JOURNAL}`,
@@ -27,7 +26,8 @@ function handleJournalControls() {
 			contentType: 'application/json',
 			beforeSend: MT_AUTH_BEFORESEND,
 			data: JSON.stringify({
-				title: title.val()
+				title: $('#mt-journal-addentry-title').val(),
+				description: $('#mt-journal-addentry-description').val()
 			})
 		})
 		.done(() => {
