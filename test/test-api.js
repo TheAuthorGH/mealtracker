@@ -34,7 +34,8 @@ function fakeJournal(userid) {
 
 function fakeJournalEntry() {
 	return {
-		title: faker.lorem.words()
+		title: faker.lorem.words(),
+		description: faker.lorem.paragraph()
 	};
 }
 
@@ -154,8 +155,9 @@ describe('MealTracker API', function() {
 				.then(function(res) {
 					expect(res).to.have.status(201);
 					expect(res).to.be.json;
-					expect(res.body.entry).to.include.keys('id', 'title', 'date');
+					expect(res.body.entry).to.include.keys('id', 'title', 'date', 'description');
 					expect(res.body.entry.title).to.equal(modelEntry.title);
+					expect(res.body.entry.description).to.equal(modelEntry.description);
 				});
 		});
 
