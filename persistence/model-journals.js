@@ -12,7 +12,7 @@ entrySchema.methods.serialize = function() {
 		title: this.title,
 		date: this.date.toISOString(),
 		description: this.description
-	}
+	};
 }
 
 const journalSchema = mongoose.Schema({
