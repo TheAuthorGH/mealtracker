@@ -58,11 +58,12 @@ function updateEntries() {
 			beforeSend: MT_AUTH_BEFORESEND
 		})
 		.done(res => {
-			if(res.length === 0) {
+			const entries = res.entries;
+			if(entries.length === 0) {
 				$('.mt-journal-noentries').show();
 			} else {
-				res.sort((e, f) => new Date(f.date) - new Date(e.date));
-				for(let e of res)
+				entries.sort((e, f) => new Date(f.date) - new Date(e.date));
+				for(let e of entries)
 					$('.mt-journal-entries > ul').append(`<li mt-journal-entry-id="${e.id}"><span>${e.title}</span><time>${formatDate(new Date(e.date))}</time></li>`);
 				$('.mt-journal-entries').show();
 			}
