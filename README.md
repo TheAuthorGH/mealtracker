@@ -1,6 +1,17 @@
 # MealTracker
 
-MealTracker is a web application that lets you keep an intuitive, image-driven journal of what you eat, when you it eat, and how it contributes to your nutrition. 
+_MealTracker_ is a web application that lets you keep an intuitive, image-driven journal of what you eat, when you it eat, and how it contributes to your nutrition. 
+
+## For Developers
+
+MealTracker is a fullstack web application.
+
+MealTracker features the following:
+* A server built with Node.js and Express providing a RESTful API.
+* User data persistence using MongoDB.
+* Full user-friendly client app built with plain HTML, CSS and JavaScript.
+* User authentication system built with JWTs, cookies and bcrypt.
+* Mocha-powered Unit Testing (serverside only).
 
 ## About
 
