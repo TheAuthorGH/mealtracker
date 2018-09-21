@@ -4,8 +4,8 @@ main {
 }
 
 form.mt-journal-addentry {
-	box-shadow: 0 0 2px 2px #AAA;
-	border-radius: 5px;
+	background-color: #EFEFEF;
+	margin: 16px 0;
 	padding: 16px;
 
 	display: flex;
@@ -43,4 +43,14 @@ form.mt-journal-addentry > * {
 	font-size: 20px;
 	text-align: center;
 	padding: 8px;
+}
+
+@media only screen and (min-width: 520px) {
+	
+	form.mt-journal-addentry {
+		background-color: inherit;
+		box-shadow: 0 0 2px 2px #AAA;
+		border-radius: 5px;
+	}
+
 }
