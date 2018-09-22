@@ -44,7 +44,6 @@ function updateJournals() {
 			list.append(`
 				<li mt-journal-id="${j.id}">
 					<span>${j.title}</span>
-					<button class="mt-journal-addentry"><span class="fas fa-fw fa-pencil-alt"></span></button>
 				</li>`);
 	})
 	.fail(() => window.location.href = '/error');
