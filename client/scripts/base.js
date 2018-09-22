@@ -14,7 +14,12 @@ function handleControls() {
 	toggleMobileNav();
 	$('.nav-control').click(function(evt) {
 		evt.preventDefault();
+		evt.stopPropagation();
 		toggleMobileNav();
+	});
+	$('body').click(function(evt) {
+		if(!mtNavHidden)
+			toggleMobileNav();
 	});
 }
 
