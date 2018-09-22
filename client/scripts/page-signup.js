@@ -8,7 +8,7 @@ function handleSignupControls() {
 
 		const messages = $('.mt-signup-messages');
 
-		const email = $('#mt-signup-email').val();
+		const email = $('#mt-signup-email').val().trim();
 		const password = $('#mt-signup-password').val();
 		
 		messages.text('Please wait...');

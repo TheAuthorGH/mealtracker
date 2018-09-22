@@ -10,7 +10,7 @@ function handleDashboardControls() {
 			url: '/journals',
 			dataType: 'json',
 			contentType: 'application/json',
-			data: JSON.stringify({user: Cookies.get('mt_user'), title: input.val()}),
+			data: JSON.stringify({user: Cookies.get('mt_user'), title: input.val().trim()}),
 			beforeSend: MT_AUTH_BEFORESEND
 		})
 		.done(() => {

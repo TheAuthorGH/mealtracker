@@ -6,8 +6,8 @@ function handleSigninControls() {
 
 		const messages = $('.mt-signin-messages');
 
-		const email = $('#mt-signin-email').val();
-		const password = $('#mt-signin-password').val();
+		const email = $('#mt-signin-email').val().trim();
+		const password = $('#mt-signin-password').val().trim();
 
 		messages.text('Please wait...');
 

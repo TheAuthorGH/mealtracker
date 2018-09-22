@@ -26,8 +26,8 @@ function handleJournalControls() {
 			contentType: 'application/json',
 			beforeSend: MT_AUTH_BEFORESEND,
 			data: JSON.stringify({
-				title: $('#mt-journal-addentry-title').val(),
-				description: $('#mt-journal-addentry-description').val()
+				title: $('#mt-journal-addentry-title').val().trim(),
+				description: $('#mt-journal-addentry-description').val().trim()
 			})
 		})
 		.done(() => {
