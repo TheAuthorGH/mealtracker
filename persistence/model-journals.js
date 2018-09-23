@@ -31,7 +31,10 @@ journalSchema.methods.serialize = function() {
 };
 
 journalSchema.methods.paginate = function(page = 0, perpage = 5) {
-	return this.entries.map(e => e.serialize()).slice(page * perpage, perpage * (page + 1));
+	return {
+		entries: this.entries.map(e => e.serialize()).slice(page * perpage, perpage * (page + 1)),
+		pages: Math.ceil(this.entries.length / perpage)
+	};
 }
 
 const Journals = mongoose.model('Journal', journalSchema);

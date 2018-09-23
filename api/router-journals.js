@@ -89,7 +89,7 @@ router.get('/entries', (req, res) => {
 	Journals.findById(id)
 		.then(journal => {
 			if(journal)
-				res.status(200).json({entries: journal.paginate(page, perpage)});
+				res.status(200).json(journal.paginate(page, perpage));
 			else
 				res.status(404).json({
 					reason: 'not-found',
