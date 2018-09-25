@@ -94,7 +94,7 @@ function updateEntries(page = currentPage) {
 				const p = page + c;
 				let button;
 				if(p < 0 || p >= res.pages)
-					button = '<button class="mt-empty"></button>';
+					button = '<button class="mt-empty" disabled></button>';
 				else
 					button = `<button class="mt-journal-entries-pagination-page${p == page ? ' mt-selected' : ''}" mt-journal-page="${p}">${p + 1}</button>`;
 				$('.mt-journal-entries-pagination').append(button);
