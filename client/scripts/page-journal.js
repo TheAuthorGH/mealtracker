@@ -43,7 +43,12 @@ function handleJournalControls() {
 	$('.mt-journal-entries-pagination').on('click', '.mt-journal-entries-pagination-page', function() {
 		updateEntries(Number($(this).attr('mt-journal-page')));
 	});
-
+	$('.mt-journal-entries-pagination').on('click', '.mt-journal-entries-pagination-first', function() {
+		updateEntries('first');
+	});
+	$('.mt-journal-entries-pagination').on('click', '.mt-journal-entries-pagination-last', function() {
+		updateEntries('last'); // ?
+	});
 }
 
 function updateEntries(page = currentPage) {
@@ -66,6 +71,10 @@ function updateEntries(page = currentPage) {
 			beforeSend: MT_AUTH_BEFORESEND
 		})
 		.done(res => {
+			if(page === 'first')
+				page = 0;
+			if(page === 'last')
+				page = res.pages - 1;
 			if(page >= res.pages)
 				return;
 			currentPage = page;
@@ -73,6 +82,8 @@ function updateEntries(page = currentPage) {
 			$('.mt-journal-noentries, .mt-journal-entries, .mt-journal-addentry').hide().prop('hidden', true);
 			$('.mt-journal-entries > ul, .mt-journal-entries-pagination').empty();
 
+			const pagination = $('.mt-journal-entries-pagination');
+			pagination.append('<button class="mt-journal-entries-pagination-first"><span class="fas fa-angle-double-left"></span></button>');
 			for(let c = -2; c < 3; c++) {
 				const p = page + c;
 				let button;
@@ -80,8 +91,9 @@ function updateEntries(page = currentPage) {
 					button = '<button class="mt-empty" disabled></button>';
 				else
 					button = `<button class="mt-journal-entries-pagination-page${p == page ? ' mt-selected' : ''}" mt-journal-page="${p}">${p + 1}</button>`;
-				$('.mt-journal-entries-pagination').append(button);
+				pagination.append(button);
 			}
+			pagination.append('<button class="mt-journal-entries-pagination-last"><span class="fas fa-angle-double-right"></span></button>');
 
 			const entries = res.entries;
 			if(entries.length === 0) {
