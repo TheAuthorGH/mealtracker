@@ -54,7 +54,6 @@ journalSchema.methods.insights = function() {
 	const insights = [];
 
 	insights.push(`<span class="mt-journal-insights-highlight">${entries.length}</span> entries in all time`);
-	// this needs to be fixed!
 	insights.push(`<span class="mt-journal-insights-highlight">${entries.filter(e => new Date() - new Date(e.date) < 86400000).length}</span> entries in the last 24 hours`);
 
 	return insights;
