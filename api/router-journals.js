@@ -78,7 +78,7 @@ router.post('/', jsonParser, (req, res) => {
 					message: 'Target user not found'
 				});
 		})
-		.catch(err => util.handleApiError(err, res));;
+		.catch(err => util.handleApiError(err, res));
 });
 
 router.get('/entries', (req, res) => {
@@ -96,7 +96,7 @@ router.get('/entries', (req, res) => {
 					message: 'Journal not found'
 				});
 		})
-		.catch(err => util.handleApiError(err, res));;
+		.catch(err => util.handleApiError(err, res));
 });
 
 router.post('/entries', jsonParser, (req, res) => {
@@ -116,7 +116,7 @@ router.post('/entries', jsonParser, (req, res) => {
 			journal.save();
 			res.status(201).json({entry: journal.entries[journal.entries.length - 1].serialize()});
 		})
-		.catch(err => util.handleApiError(err, res));;
+		.catch(err => util.handleApiError(err, res));
 });
 
 router.get('/insights', (req, res) => {
