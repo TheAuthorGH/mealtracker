@@ -119,4 +119,11 @@ router.post('/entries', jsonParser, (req, res) => {
 		.catch(err => util.handleApiError(err, res));;
 });
 
+router.get('/insights', (req, res) => {
+	const id = req.query.id;
+	if(!util.validateId(id, res)) return;
+	Journals.findById(id)
+		.then(journal => res.status(200).json({insights: journal.insights()}));
+});
+
 module.exports = router;
