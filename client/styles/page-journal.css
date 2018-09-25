@@ -79,6 +79,20 @@ form.mt-journal-addentry > * {
 	padding: 8px;
 }
 
+.mt-journal-insights {
+	color: #777;
+}
+
+.mt-journal-insights > ul > li {
+	margin: 4px 0;
+	text-align: center;
+}
+
+.mt-journal-insights .mt-journal-insights-highlight {
+	font-size: 24px;
+	color: #C50;
+}
+
 @media only screen and (min-width: 520px) {
 	
 	form.mt-journal-addentry {
