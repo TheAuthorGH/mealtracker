@@ -37,7 +37,17 @@ journalSchema.methods.paginate = function(page = 0, perpage = 5) {
 		entries: entries.slice(page * perpage, perpage * (page + 1)),
 		pages: Math.ceil(this.entries.length / perpage)
 	};
-}
+};
+
+journalSchema.methods.insights = function() {
+	const entries = this.entries;
+	const insights = [];
+
+	insights.push(`<span class="mt-journal-insights-highlight">${entries.length}</span> entries in all time`);
+	insights.push(`<span class="mt-journal-insights-highlight">${entries.filter(e => new Date() - new Date(e.date) < 86400000).length}</span> entries today`);
+
+	return insights;
+};
 
 const Journals = mongoose.model('Journal', journalSchema);
 
