@@ -16,6 +16,40 @@ form.mt-journal-addentry > * {
 	margin: 4px 0;
 }
 
+.mt-journal-entries > section {
+	padding: 16px;
+}
+
+.mt-journal-entries-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.mt-journal-entries-pagination > button {
+	border-radius: 0px;
+	margin: 0 4px;
+	padding: 8px;
+	width: 32px;
+	height: 32px;
+	color: #C50;
+	background-color: inherit;
+	border: 1px #D62 solid;
+}
+
+.mt-journal-entries-pagination > button.mt-selected {
+	color: #FFF;
+	background-color: #D62;
+}
+
+.mt-journal-entries-pagination > button.mt-empty {
+	cursor: default;
+}
+
+.mt-journal-entries-pagination > button:hover:not(.mt-selected, .mt-empty) {
+	background-color: #FDB;
+}
+
 .mt-journal-entries > ul {
 	margin: 16px 0;
 	border-radius: 5px;
