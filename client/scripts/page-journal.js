@@ -11,24 +11,6 @@ function clearEntryForm() {
 	$('.mt-journal-addentry').find('input, textarea').val('');
 }
 
-function uploadJournalEntry(title, desc) {
-	$.ajax({
-		type: 'POST',
-		url: `/journals/entries?id=${MT_JOURNAL}`,
-		dataType: 'json',
-		contentType: 'application/json',
-		beforeSend: MT_AUTH_BEFORESEND,
-		data: JSON.stringify({
-			title: title.trim(),
-			description: desc
-		})
-	})
-	.done(() => {
-		console.log('Uploaded');
-	})
-	.fail(() => window.location.href = '/error');
-}
-
 function handleJournalControls() {
 	$('.mt-journal-addentry').hide().prop('hidden', true);
 	$('.mt-journal-addentry-open').click(function() {
@@ -53,6 +35,7 @@ function handleJournalControls() {
 		.done(() => {
 			clearEntryForm();
 			updateEntries();
+			updateInsights();
 		})
 		.fail(() => window.location.href = '/error');
 	});
@@ -114,7 +97,23 @@ function updateEntries(page = currentPage) {
 	.fail(() => window.location.href = '/error');
 }
 
+function updateInsights() {
+	$.ajax({
+		type: 'GET',
+		url: '/journals/insights?id=' + MT_JOURNAL,
+		contentType: 'application/json',
+		beforeSend: MT_AUTH_BEFORESEND
+	})
+	.done(res => {
+		$('.mt-journal-insights > ul').empty();
+		for(let i of res.insights)
+			$('.mt-journal-insights > ul').append(`<li>${i}</li>`);
+	})
+	.fail(() => window.location.href = '/error');
+}
+
 $(function() {
-	updateEntries();
 	handleJournalControls();
+	updateEntries();
+	updateInsights();
 });
