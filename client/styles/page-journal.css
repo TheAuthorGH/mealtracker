@@ -46,7 +46,7 @@ form.mt-journal-addentry > * {
 	cursor: default;
 }
 
-.mt-journal-entries-pagination > button:hover:not(.mt-selected, .mt-empty) {
+.mt-journal-entries-pagination > button:hover:not(.mt-selected):not(.mt-empty) {
 	background-color: #FDB;
 }
 
