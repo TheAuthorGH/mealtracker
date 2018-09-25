@@ -52,8 +52,6 @@ function handleJournalControls() {
 }
 
 function updateEntries(page = currentPage) {
-	if(page < 0)
-		return;
 	$.ajax({
 		type: 'GET',
 		url: `/journals?id=${MT_JOURNAL}`,
@@ -71,13 +69,7 @@ function updateEntries(page = currentPage) {
 			beforeSend: MT_AUTH_BEFORESEND
 		})
 		.done(res => {
-			if(page === 'first')
-				page = 0;
-			if(page === 'last')
-				page = res.pages - 1;
-			if(page >= res.pages)
-				return;
-			currentPage = page;
+			currentPage = res.page;
 
 			$('.mt-journal-noentries, .mt-journal-entries, .mt-journal-addentry').hide().prop('hidden', true);
 			$('.mt-journal-entries > ul, .mt-journal-entries-pagination').empty();
@@ -85,12 +77,12 @@ function updateEntries(page = currentPage) {
 			const pagination = $('.mt-journal-entries-pagination');
 			pagination.append('<button class="mt-journal-entries-pagination-first"><span class="fas fa-angle-double-left"></span></button>');
 			for(let c = -2; c < 3; c++) {
-				const p = page + c;
+				const p = currentPage + c;
 				let button;
 				if(p < 0 || p >= res.pages)
 					button = '<button class="mt-empty" disabled></button>';
 				else
-					button = `<button class="mt-journal-entries-pagination-page${p == page ? ' mt-selected' : ''}" mt-journal-page="${p}">${p + 1}</button>`;
+					button = `<button class="mt-journal-entries-pagination-page${p == currentPage ? ' mt-selected' : ''}" mt-journal-page="${p}">${p + 1}</button>`;
 				pagination.append(button);
 			}
 			pagination.append('<button class="mt-journal-entries-pagination-last"><span class="fas fa-angle-double-right"></span></button>');
