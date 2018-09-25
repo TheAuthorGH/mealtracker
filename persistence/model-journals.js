@@ -33,9 +33,19 @@ journalSchema.methods.serialize = function() {
 journalSchema.methods.paginate = function(page = 0, perpage = 5) {
 	const entries = this.entries.map(e => e.serialize());
 	entries.sort((e, f) => new Date(f.date) - new Date(e.date));
+	const pages = Math.ceil(this.entries.length / perpage);
+
+	if(page === 'first' || page < 0)
+		page = 0;
+	else if(page === 'last' || page >= pages)
+		page = pages - 1;
+	else
+		page = Number(page);
+	
 	return {
 		entries: entries.slice(page * perpage, perpage * (page + 1)),
-		pages: Math.ceil(this.entries.length / perpage)
+		pages: pages,
+		page: page
 	};
 };
 
@@ -44,7 +54,8 @@ journalSchema.methods.insights = function() {
 	const insights = [];
 
 	insights.push(`<span class="mt-journal-insights-highlight">${entries.length}</span> entries in all time`);
-	insights.push(`<span class="mt-journal-insights-highlight">${entries.filter(e => new Date() - new Date(e.date) < 86400000).length}</span> entries today`);
+	// this needs to be fixed!
+	insights.push(`<span class="mt-journal-insights-highlight">${entries.filter(e => new Date() - new Date(e.date) < 86400000).length}</span> entries in the last 24 hours`);
 
 	return insights;
 };
