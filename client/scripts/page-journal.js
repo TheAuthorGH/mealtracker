@@ -1,11 +1,14 @@
 'use strict';
 
-const MT_JOURNAL = new URL(window.location).searchParams.get('id');
+const SEARCHPARAMS = new URL(window.location).searchParams;
+
+const MT_JOURNAL = SEARCHPARAMS.get('id');
 
 if(MT_JOURNAL === null)
 	window.location.href = '/dashboard';
 
-let currentPage = 0;
+let perpage = Number(SEARCHPARAMS.get('perpage')) || 10;
+let currentPage = Number(SEARCHPARAMS.get('page')) - 1 || 0;
 
 function clearEntryForm() {
 	$('.mt-journal-addentry').find('input, textarea').val('');
@@ -47,7 +50,7 @@ function handleJournalControls() {
 		updateEntries('first');
 	});
 	$('.mt-journal-entries-pagination').on('click', '.mt-journal-entries-pagination-last', function() {
-		updateEntries('last'); // ?
+		updateEntries('last');
 	});
 }
 
@@ -64,7 +67,7 @@ function updateEntries(page = currentPage) {
 		$('h2').first().text('Journal - ' + journal.title);
 		$.ajax({
 			type: 'GET',
-			url: `/journals/entries?id=${MT_JOURNAL}&perpage=10&page=${page}`,
+			url: `/journals/entries?id=${MT_JOURNAL}&perpage=${perpage}&page=${page}`,
 			contentType: 'application/json',
 			beforeSend: MT_AUTH_BEFORESEND
 		})
