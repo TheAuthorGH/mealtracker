@@ -8,7 +8,7 @@ if(MT_JOURNAL === null)
 	window.location.href = '/dashboard';
 
 let perpage = Number(SEARCHPARAMS.get('perpage')) || 10;
-let currentPage = Number(SEARCHPARAMS.get('page')) - 1 || 0;
+let currentPage = 0;
 
 function clearEntryForm() {
 	$('.mt-journal-addentry').find('input, textarea').val('');
@@ -121,6 +121,12 @@ function updateInsights() {
 
 $(function() {
 	handleJournalControls();
-	updateEntries();
+
+	let page = SEARCHPARAMS.get('page');
+	if(page)
+		updateEntries(isNaN(page) ? page : Number(page) - 1);
+	else
+		updateEntries();
+
 	updateInsights();
 });
