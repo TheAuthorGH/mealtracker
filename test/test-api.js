@@ -155,9 +155,26 @@ describe('MealTracker API', function() {
 				.then(function(res) {
 					expect(res).to.have.status(201);
 					expect(res).to.be.json;
+					expect(res.body);
 					expect(res.body.entry).to.include.keys('id', 'title', 'date', 'description');
 					expect(res.body.entry.title).to.equal(modelEntry.title);
 					expect(res.body.entry.description).to.equal(modelEntry.description);
+				});
+		});
+
+		it('should return journal insights on GET /insights?id=<journalid>', function() {
+			return Journals.findOne()
+				.then(function(journal) {
+					return chai.request(app)
+						.get('/journals/insights?id=' + journal._id);
+				})
+				.then(function(res) {
+					expect(res).to.have.status(200);
+					expect(res).to.be.json;
+					expect(res.body).to.include.keys('insights');
+					expect(res.body.insights).to.be.an('array');
+					expect(res.body.insights.length).to.be.at.least(0);
+					expect(res.body.insights[0]).to.be.a('string');
 				});
 		});
 
