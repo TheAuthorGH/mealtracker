@@ -73,6 +73,7 @@ describe('MealTracker API', function() {
 				.then(function(res) {
 					expect(res).to.have.status(200);
 					expect(res).to.be.json;
+					expect(res.body).to.include.keys('user');
 					expect(res.body.user).to.include.keys('id', 'email', 'verified');
 					expect(res.body.user.id).to.equal(user._id.toString());
 					expect(res.body.user.email).to.equal(user.email);
@@ -86,6 +87,7 @@ describe('MealTracker API', function() {
 				.then(function(res) {
 					expect(res).to.have.status(201);
 					expect(res).to.be.json;
+					expect(res.body).to.include.keys('user');
 					expect(res.body.user).to.include.keys('id', 'email', 'verified');
 					expect(res.body.user.email).to.equal(modelUser.email);
 					return Users.findById(res.body.user.id);
@@ -113,6 +115,7 @@ describe('MealTracker API', function() {
 				.then(function(res) {
 					expect(res).to.have.status(200);
 					expect(res).to.be.json;
+					expect(res.body).to.include.keys('journal');
 					expect(res.body.journal).to.include.keys('id', 'user', 'title', 'entryAmount');
 					expect(res.body.journal.user).to.equal(journal.user.toString());
 					expect(res.body.journal.title).to.equal(journal.title.toString());
@@ -126,6 +129,7 @@ describe('MealTracker API', function() {
 				.then(function(res) {
 					expect(res).to.have.status(201);
 					expect(res).to.be.json;
+					expect(res.body).to.include.keys('journal');
 					expect(res.body.journal).to.include.keys('id', 'user', 'title', 'entryAmount');
 					expect(res.body.journal.user).to.equal(modelJournal.user.toString());
 					expect(res.body.journal.title).to.equal(modelJournal.title);
@@ -141,6 +145,7 @@ describe('MealTracker API', function() {
 				.then(function(res) {
 					expect(res).to.have.status(200);
 					expect(res).to.be.json;
+					expect(res.body).to.include.keys('entries');
 					expect(res.body.entries).to.be.an('array');
 				});
 		});
@@ -155,7 +160,7 @@ describe('MealTracker API', function() {
 				.then(function(res) {
 					expect(res).to.have.status(201);
 					expect(res).to.be.json;
-					expect(res.body);
+					expect(res.body).to.include.keys('entry');
 					expect(res.body.entry).to.include.keys('id', 'title', 'date', 'description');
 					expect(res.body.entry.title).to.equal(modelEntry.title);
 					expect(res.body.entry.description).to.equal(modelEntry.description);
