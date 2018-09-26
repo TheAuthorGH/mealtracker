@@ -40,7 +40,7 @@ journalSchema.methods.paginate = function(page = 0, perpage = 5) {
 	else if(page === 'last' || page >= pages)
 		page = pages - 1;
 	else
-		page = Number(page);
+		page = Number(page) || 0;
 	
 	return {
 		entries: entries.slice(page * perpage, perpage * (page + 1)),
