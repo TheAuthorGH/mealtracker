@@ -44,13 +44,13 @@ function handleJournalControls() {
 	});
 
 	$('.mt-journal-entries-pagination').on('click', '.mt-journal-entries-pagination-page', function() {
-		updateEntries(Number($(this).attr('mt-journal-page')));
+		window.location.href = `/journal?id=${MT_JOURNAL}&perpage=${perpage}&page=${Number($(this).attr('mt-journal-page')) + 1}`;
 	});
 	$('.mt-journal-entries-pagination').on('click', '.mt-journal-entries-pagination-first', function() {
-		updateEntries('first');
+		window.location.href = `/journal?id=${MT_JOURNAL}&perpage=${perpage}&page=first`;
 	});
 	$('.mt-journal-entries-pagination').on('click', '.mt-journal-entries-pagination-last', function() {
-		updateEntries('last');
+		window.location.href = `/journal?id=${MT_JOURNAL}&perpage=${perpage}&page=last`;
 	});
 }
 
