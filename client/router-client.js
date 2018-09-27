@@ -6,8 +6,6 @@ router.get('/', (req, res) => {
 	res.sendFile(`${__dirname}/index.html`);
 });
 
-router.use('/journal', express.static('./client/journal.html'));
-
 router.get('/:action', (req, res, next) => {
 	switch(req.params.action) {
 		case 'dashboard':
@@ -15,6 +13,7 @@ router.get('/:action', (req, res, next) => {
 		case 'signout':
 		case 'signup':
 		case 'error':
+		case 'journal':
 			res.sendFile(`${__dirname}/${req.params.action}.html`);
 			break;
 		default:
