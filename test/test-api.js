@@ -141,7 +141,7 @@ describe('MealTracker API', function() {
 				});
 		});
 
-		it('should return paginated entries on /entries?id=<journalid>&perpage=<perpage>&page=<page>', function() {
+		it('should return paginated entries on GET /entries?id=<journalid>&perpage=<perpage>&page=<page>', function() {
 			return Journals.findOne()
 				.then(function(journal) {
 					return chai.request(app)
@@ -170,6 +170,29 @@ describe('MealTracker API', function() {
 					expect(res.body.entry).to.include.keys('id', 'title', 'date', 'description');
 					expect(res.body.entry.title).to.equal(modelEntry.title);
 					expect(res.body.entry.description).to.equal(modelEntry.description);
+				});
+		});
+
+		it('should delete a journal entry on DELETE /entries?id=<entryid>', function() {
+			let journalid;
+			let entryid;
+			return Journals.findOne()
+				.then(function(journal) {
+					journalid = journal._id;
+					return journal.entries[0];
+				})
+				.then(function(entry) {
+					entryid = entry._id;
+					return chai.request(app)
+						.delete('/journals/entries?id=' + entryid);
+				})
+				.then(function(res) {
+					expect(res).to.have.status(204);
+					expect(res.body).to.be.empty;
+					return Journals.findById(journalid);
+				})
+				.then(function(journal) {
+					expect(journal.entries.find(e => e._id === entryid)).to.be.undefined;
 				});
 		});
 
