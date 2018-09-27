@@ -26,15 +26,20 @@ function fakeUser() {
 }
 
 function fakeJournal(userid) {
+	const entries = [];
+	for(let e = 0; e < 12; e++)
+		entries.push(fakeJournalEntry());
 	return {
 		user: userid,
-		title: faker.lorem.words()
+		title: faker.lorem.words(),
+		entries: entries
 	};
 }
 
 function fakeJournalEntry() {
 	return {
 		title: faker.lorem.words(),
+		date: new Date(),
 		description: faker.lorem.paragraph()
 	};
 }
@@ -136,17 +141,18 @@ describe('MealTracker API', function() {
 				});
 		});
 
-		it('should return paginated entries on /entries?id=<journalid>', function() {
+		it('should return paginated entries on /entries?id=<journalid>&perpage=<perpage>&page=<page>', function() {
 			return Journals.findOne()
 				.then(function(journal) {
 					return chai.request(app)
-						.get('/journals/entries?id=' + journal._id);
+						.get(`/journals/entries?id=${journal._id}&perpage=4&page=2`);
 				})
 				.then(function(res) {
 					expect(res).to.have.status(200);
 					expect(res).to.be.json;
 					expect(res.body).to.include.keys('entries');
 					expect(res.body.entries).to.be.an('array');
+					expect(res.body.entries.length).to.equal(4);
 				});
 		});
 
