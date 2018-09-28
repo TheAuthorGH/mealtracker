@@ -2,6 +2,10 @@
 
 _MealTracker_ is a web application that lets you keep an intuitive, image-driven journal of what you eat, when you it eat, and how it contributes to your nutrition. 
 
+## Demo
+
+You can use a live demo of this app [here](https://agile-ridge-29125.herokuapp.com/).
+
 ## For Developers
 
 MealTracker is a fullstack web application.
