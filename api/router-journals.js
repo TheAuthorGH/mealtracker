@@ -120,10 +120,17 @@ router.post('/entries', jsonParser, (req, res) => {
 });
 
 router.delete('/entries', (req, res) => {
-	const id = req.query.id;
-	if(!util.validateId(id, res)) return;
-	Journals.findByIdAndRemove(id)
-		.then(() => res.status(204).end())
+	const journalId = req.query.journalid;
+	const entryId = req.query.entryid;
+	if(!util.validateId(journalId, res) || !util.validateId(entryId, res)) return;
+	Journals.findById(journalId)
+		.then(journal => {
+			const entry = journal.entries.id(entryId);
+			if(entry) 
+				entry.remove();
+			journal.save();
+			res.status(204).end();
+		})
 		.catch(err => util.handleApiError(err, res));
 });
 
