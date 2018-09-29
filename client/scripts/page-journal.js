@@ -52,6 +52,16 @@ function handleJournalControls() {
 	$('.mt-journal-entries-pagination').on('click', '.mt-journal-entries-pagination-last', function() {
 		window.location.href = `/journal?id=${MT_JOURNAL}&perpage=${perpage}&page=last`;
 	});
+
+	$('.mt-journal-entries > ul').on('click', '.mt-journal-entry-remove', function() {
+		const entryId = $(this).closest('li').attr('mt-journal-entry-id');
+		$.ajax({
+			type: 'DELETE',
+			url: `/journals/entries?journalid=${MT_JOURNAL}&entryid=${entryId}`,
+			beforeSend: MT_AUTH_BEFORESEND
+		})
+		.done(updateEntries);
+	});
 }
 
 function updateEntries(page = currentPage) {
@@ -95,7 +105,13 @@ function updateEntries(page = currentPage) {
 				$('.mt-journal-noentries').show();
 			} else {
 				for(let e of entries)
-					$('.mt-journal-entries > ul').append(`<li mt-journal-entry-id="${e.id}"><span>${e.title}</span><time>${formatDate(new Date(e.date))}</time></li>`);
+					$('.mt-journal-entries > ul').append(`
+						<li mt-journal-entry-id="${e.id}">
+							<span>${e.title}</span>
+							<time>${formatDate(new Date(e.date))}</time>
+							<button class="mt-journal-entry-remove mt-button-square"><span class="fas fa-fw fa-times"></span></button>
+						</li>
+					`);
 				$('.mt-journal-entries').show();
 			}
 		})
