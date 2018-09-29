@@ -174,25 +174,25 @@ describe('MealTracker API', function() {
 		});
 
 		it('should delete a journal entry on DELETE /entries?id=<entryid>', function() {
-			let journalid;
-			let entryid;
+			let journalId;
+			let entryId;
 			return Journals.findOne()
 				.then(function(journal) {
-					journalid = journal._id;
+					journalId = journal._id;
 					return journal.entries[0];
 				})
 				.then(function(entry) {
-					entryid = entry._id;
+					entryId = entry._id;
 					return chai.request(app)
-						.delete('/journals/entries?id=' + entryid);
+						.delete(`/journals/entries?journalid=${journalId}&entryid=${entryId}`);
 				})
 				.then(function(res) {
 					expect(res).to.have.status(204);
 					expect(res.body).to.be.empty;
-					return Journals.findById(journalid);
+					return Journals.findById(journalId);
 				})
 				.then(function(journal) {
-					expect(journal.entries.find(e => e._id === entryid)).to.be.undefined;
+					expect(journal.entries.id(entryId)).to.be.null;
 				});
 		});
 
