@@ -75,7 +75,7 @@ router.post('/', jsonParser, (req, res) => {
 			else
 				res.status(404).json({
 					reason: 'not-found',
-					message: 'Target user not found'
+					message: 'Target user not found.'
 				});
 		})
 		.catch(err => util.handleApiError(err, res));
@@ -93,7 +93,7 @@ router.get('/entries', (req, res) => {
 			else
 				res.status(404).json({
 					reason: 'not-found',
-					message: 'Journal not found'
+					message: 'Journal not found.'
 				});
 		})
 		.catch(err => util.handleApiError(err, res));
@@ -138,7 +138,15 @@ router.get('/insights', (req, res) => {
 	const id = req.query.id;
 	if(!util.validateId(id, res)) return;
 	Journals.findById(id)
-		.then(journal => res.status(200).json({insights: journal.insights()}))
+		.then(journal => {
+			if(journal)
+				res.status(200).json({insights: journal.insights()})
+			else
+				res.status(404).json({
+					reason: 'not-found',
+					message: 'Journal not found.'
+				});
+		})
 		.catch(err => util.handleApiError(err, res));
 });
 
