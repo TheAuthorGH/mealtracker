@@ -49,9 +49,13 @@ input.mt-invalid {
 button {
 	background-color: #C50;
 	color: #FFF;
-	padding: 8px 16px;
+	padding: 8px;
 	border-radius: 5px;
 	cursor: pointer;
+}
+
+button:not(.mt-button-square) {
+	padding: 8px 16px;
 }
 
 button:hover, button:focus {
