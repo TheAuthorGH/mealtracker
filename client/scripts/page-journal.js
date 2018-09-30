@@ -112,6 +112,12 @@ function updateEntries(page = currentPage) {
 							<button class="mt-journal-entry-remove mt-button-square"><span class="fas fa-fw fa-times"></span></button>
 						</li>
 					`);
+
+				if(currentPage === res.pages - 1)
+					$('.mt-journal-entries-pagination-last').attr('disabled', true).addClass('mt-selected');
+				if(currentPage === 0)
+					$('.mt-journal-entries-pagination-first').attr('disabled', true).addClass('mt-selected');
+
 				$('.mt-journal-entries').show();
 			}
 		})
