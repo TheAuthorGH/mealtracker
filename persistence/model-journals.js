@@ -30,8 +30,11 @@ journalSchema.methods.serialize = function() {
 	};
 };
 
-journalSchema.methods.paginate = function(page = 0, perpage = 5) {
-	const entries = this.entries.map(e => e.serialize());
+journalSchema.methods.paginate = function(page = 0, perpage = 5, filter) {
+
+	let entries = this.entries.map(e => e.serialize());
+	if(filter)
+		entries = entries.filter(filter);
 	entries.sort((e, f) => new Date(f.date) - new Date(e.date));
 	const pages = Math.ceil(this.entries.length / perpage);
 
