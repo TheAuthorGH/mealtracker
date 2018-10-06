@@ -41,7 +41,7 @@ router.get('/', (req, res) => {
 				} else {
 					res.status(404).json({
 						reason: 'not-found',
-						message: 'User not found'
+						message: 'User not found.'
 					});
 				}
 			})
@@ -85,16 +85,25 @@ router.get('/entries', (req, res) => {
 	const id = req.query.id;
 	const page = req.query.page || 0;
 	const perpage = req.query.perpage || 5;
+
+	let filter;
+	if(req.query.search) {
+		let search = req.query.search.toLowerCase();
+		filter = e => e.title.toLowerCase().includes(search) || e.description.toLowerCase().includes(search);
+	}
+
 	if(!util.validateId(id, res)) return;
 	Journals.findById(id)
 		.then(journal => {
-			if(journal)
-				res.status(200).json(journal.paginate(page, perpage));
-			else
+			if(journal) {
+				const json = filter ? journal.paginate(page, perpage, filter) : journal.paginate(page, perpage);
+				res.status(200).json(json);
+			} else {
 				res.status(404).json({
 					reason: 'not-found',
 					message: 'Journal not found.'
 				});
+			}
 		})
 		.catch(err => util.handleApiError(err, res));
 });
