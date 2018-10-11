@@ -120,6 +120,13 @@ router.post('/entries', jsonParser, (req, res) => {
 				});
 				return;
 			}
+			if(req.body.title.length > 20 || req.body.description > 300) {
+				res.status(400).json({
+					reason: 'data-invalid',
+					message: 'Invalid entry data: entry title or description too long.'
+				});
+				return;
+			}
 			req.body.date = req.body.date ? new Date(req.body.date) : new Date();
 			journal.entries.push(req.body);
 			journal.save();
