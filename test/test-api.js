@@ -38,9 +38,9 @@ function fakeJournal(userid) {
 
 function fakeJournalEntry() {
 	return {
-		title: faker.lorem.words(),
+		title: faker.lorem.word(),
 		date: new Date(),
-		description: faker.lorem.paragraph()
+		description: faker.lorem.words()
 	};
 }
 
