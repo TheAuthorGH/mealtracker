@@ -109,13 +109,13 @@ describe('MealTracker API', function() {
 
 	describe('Journals API', function() {
 
-		it('should return a single journal on GET /?id=<journalid>', function() {
+		it('should return a single journal on GET /?journalid=<journalid>&userid=<userid>', function() {
 			let journal;
 			return Journals.findOne()
 				.then(function(_journal) {
 					journal = _journal;
 					return chai.request(app)
-						.get('/journals?id=' + journal._id);
+						.get(`/journals?journalid=${journal._id}&userid=${journal.user}`);
 				})
 				.then(function(res) {
 					expect(res).to.have.status(200);
@@ -141,11 +141,11 @@ describe('MealTracker API', function() {
 				});
 		});
 
-		it('should return paginated entries on GET /entries?id=<journalid>&perpage=<perpage>&page=<page>', function() {
+		it('should return paginated entries on GET /entries?journalid=<journalid>&userid=<userid>&perpage=<perpage>&page=<page>', function() {
 			return Journals.findOne()
 				.then(function(journal) {
 					return chai.request(app)
-						.get(`/journals/entries?id=${journal._id}&perpage=4&page=2`);
+						.get(`/journals/entries?journalid=${journal._id}&userid=${journal.user}&perpage=4&page=2`);
 				})
 				.then(function(res) {
 					expect(res).to.have.status(200);
@@ -156,11 +156,11 @@ describe('MealTracker API', function() {
 				});
 		});
 
-		it('should create a journal entry on POST /entries?id=<journalid>', function() {
+		it('should create a journal entry on POST /entries?journalid=<journalid>&userid=<userid>', function() {
 			return Journals.findOne()
 				.then(function(journal) {
 					return chai.request(app)
-						.post('/journals/entries?id=' + journal._id)
+						.post(`/journals/entries?journalid=${journal._id}&userid=${journal.user}`)
 						.send(modelEntry);
 				})
 				.then(function(res) {
@@ -173,18 +173,20 @@ describe('MealTracker API', function() {
 				});
 		});
 
-		it('should delete a journal entry on DELETE /entries?id=<entryid>', function() {
+		it('should delete a journal entry on DELETE /entries?journalid=<entryid>&userid=<userid>&entryid=<entryid>', function() {
 			let journalId;
+			let userId;
 			let entryId;
 			return Journals.findOne()
 				.then(function(journal) {
 					journalId = journal._id;
+					userId = journal.user;
 					return journal.entries[0];
 				})
 				.then(function(entry) {
 					entryId = entry._id;
 					return chai.request(app)
-						.delete(`/journals/entries?journalid=${journalId}&entryid=${entryId}`);
+						.delete(`/journals/entries?journalid=${journalId}&userid=${userId}&entryid=${entryId}`);
 				})
 				.then(function(res) {
 					expect(res).to.have.status(204);
@@ -196,11 +198,11 @@ describe('MealTracker API', function() {
 				});
 		});
 
-		it('should return journal insights on GET /insights?id=<journalid>', function() {
+		it('should return journal insights on GET /insights?journalid=<journalid>&userid=<userid>', function() {
 			return Journals.findOne()
 				.then(function(journal) {
 					return chai.request(app)
-						.get('/journals/insights?id=' + journal._id);
+						.get(`/journals/insights?journalid=${journal._id}&userid=${journal.user}`);
 				})
 				.then(function(res) {
 					expect(res).to.have.status(200);
