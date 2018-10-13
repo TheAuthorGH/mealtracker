@@ -13,26 +13,37 @@ if(config.ENABLE_AUTH)
 	router.use(jwtAuth);
 
 router.get('/', (req, res) => {
-	const id = req.query.id;
-	const userid = req.query.userid;
+	const journalId = req.query.journalid;
+	const userId = req.query.userid;
 	const page = req.query.page || 0;
 	const perpage = req.query.perpage || 5;
-	if(id) {
-		if(!util.validateId(id, res)) return;
-		Journals.findById(id)
+
+	if(!util.validateId(userId, res)) return;
+
+	if(journalId) {
+		if(!util.validateId(journalId, res)) return;
+		Journals.findById(journalId)
 			.then(journal => {
-				if(journal)
-					res.status(200).json({journal: journal.serialize()});
-				else
+				if(!journal) {
 					res.status(404).json({
 						reason: 'not-found',
 						message: 'Journal not found.'
 					});
+					return;
+				}
+				if(journal.user.toString() !== userId) {
+					res.status(401).json({
+						reason: 'unauthorized',
+						message: 'Journal does not belong to user.'
+					});
+					return;
+				}
+
+				res.status(200).json({journal: journal.serialize()});
 			})
 			.catch(err => util.handleApiError(err, res));
-	} else if(userid) {
-		if(!util.validateId(userid, res)) return;
-		Journals.find({user: userid})
+	} else {
+		Journals.find({user: userId})
 			.skip(page * perpage)
 			.limit(perpage)
 			.then(journals => {
@@ -46,11 +57,6 @@ router.get('/', (req, res) => {
 				}
 			})
 			.catch(err => util.handleApiError(err, res));
-	} else {
-		res.status(400).json({
-			reason: 'data-invalid',
-			message: 'Not enough data to find journals.'
-		});
 	}
 });
 
@@ -82,9 +88,12 @@ router.post('/', jsonParser, (req, res) => {
 });
 
 router.get('/entries', (req, res) => {
-	const id = req.query.id;
+	const journalId = req.query.journalid;
+	const userId = req.query.userid;
 	const page = req.query.page || 0;
 	const perpage = req.query.perpage || 5;
+
+	if(!util.validateId(journalId, res) || !util.validateId(userId, res)) return;
 
 	let filter;
 	if(req.query.search) {
@@ -92,27 +101,52 @@ router.get('/entries', (req, res) => {
 		filter = e => e.title.toLowerCase().includes(search) || e.description.toLowerCase().includes(search);
 	}
 
-	if(!util.validateId(id, res)) return;
-	Journals.findById(id)
+	Journals.findById(journalId)
 		.then(journal => {
-			if(journal) {
-				const json = filter ? journal.paginate(page, perpage, filter) : journal.paginate(page, perpage);
-				res.status(200).json(json);
-			} else {
+			if(!journal) {
 				res.status(404).json({
 					reason: 'not-found',
 					message: 'Journal not found.'
 				});
+				return;
 			}
+			if(journal.user.toString() !== userId) {
+				res.status(401).json({
+					reason: 'unauthorized',
+					message: 'Journal does not belong to user.'
+				});
+				return;
+			}
+			
+			const json = filter ? journal.paginate(page, perpage, filter) : journal.paginate(page, perpage);
+			res.status(200).json(json);
 		})
 		.catch(err => util.handleApiError(err, res));
 });
 
 router.post('/entries', jsonParser, (req, res) => {
-	const id = req.query.id;
-	if(!util.validateId(id, res)) return;
-	Journals.findById(id)
+	const journalId = req.query.journalid;
+	const userId = req.query.userid;
+
+	if(!util.validateId(journalId, res) || !util.validateId(userId, res)) return;
+
+	Journals.findById(journalId)
 		.then(journal => {
+			if(!journal) {
+				res.status(404).json({
+					reason: 'not-found',
+					message: 'Journal not found.'
+				});
+				return;
+			}
+			if(journal.user.toString() !== userId) {
+				res.status(401).json({
+					reason: 'unauthorized',
+					message: 'Journal does not belong to user.'
+				});
+				return;
+			}
+
 			if(!util.objHasFields(req.body, ['title'])) {
 				res.status(400).json({
 					reason: 'data-invalid',
@@ -137,10 +171,28 @@ router.post('/entries', jsonParser, (req, res) => {
 
 router.delete('/entries', (req, res) => {
 	const journalId = req.query.journalid;
+	const userId = req.query.userid;
 	const entryId = req.query.entryid;
-	if(!util.validateId(journalId, res) || !util.validateId(entryId, res)) return;
+
+	if(!util.validateId(journalId, res) || !util.validateId(userId, res) || !util.validateId(entryId, res)) return;
+
 	Journals.findById(journalId)
 		.then(journal => {
+			if(!journal) {
+				res.status(404).json({
+					reason: 'not-found',
+					message: 'Journal not found.'
+				});
+				return;
+			}
+			if(journal.user.toString() !== userId) {
+				res.status(401).json({
+					reason: 'unauthorized',
+					message: 'Journal does not belong to user.'
+				});
+				return;
+			}
+
 			const entry = journal.entries.id(entryId);
 			if(entry) 
 				entry.remove();
@@ -151,17 +203,29 @@ router.delete('/entries', (req, res) => {
 });
 
 router.get('/insights', (req, res) => {
-	const id = req.query.id;
-	if(!util.validateId(id, res)) return;
-	Journals.findById(id)
+	const journalId = req.query.journalid;
+	const userId = req.query.userid;
+
+	if(!util.validateId(journalId, res) || !util.validateId(userId, res)) return;
+
+	Journals.findById(journalId)
 		.then(journal => {
-			if(journal)
-				res.status(200).json({insights: journal.insights()})
-			else
+			if(!journal) {
 				res.status(404).json({
 					reason: 'not-found',
 					message: 'Journal not found.'
 				});
+				return;
+			}
+			if(journal.user.toString() !== userId) {
+				res.status(401).json({
+					reason: 'unauthorized',
+					message: 'Journal does not belong to user.'
+				});
+				return;
+			}
+
+			res.status(200).json({insights: journal.insights()});
 		})
 		.catch(err => util.handleApiError(err, res));
 });
