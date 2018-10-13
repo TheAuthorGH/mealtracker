@@ -27,14 +27,8 @@ describe('MealTracker Auth API', function() {
 
 	let jwt;
 
-	before(() => {
-		startServer(TEST_DATABASE_URL);
-		populateDb();
-	});
-	after(() => {
-		dropDb();
-		stopServer();
-	});
+	before(() => startServer(TEST_DATABASE_URL).then(() => populateDb()));
+	after(() => dropDb().then(() => stopServer()));
 
 	it('should return a JWT on POST /login if provided with correct login data', function() {
 		return chai.request(app)
