@@ -9,6 +9,24 @@ const Users = require('../persistence/model-users');
 
 const router = require('express').Router();
 
+function validateJournalRequest(journal, userId) {
+	if(!journal) {
+		res.status(404).json({
+			reason: 'not-found',
+			message: 'Journal not found.'
+		});
+		return false;
+	}
+	if(journal.user.toString() !== userId) {
+		res.status(401).json({
+			reason: 'unauthorized',
+			message: 'Journal does not belong to user.'
+		});
+		return false;
+	}
+	return true;
+}
+
 if(config.ENABLE_AUTH)
 	router.use(jwtAuth);
 
@@ -24,21 +42,7 @@ router.get('/', (req, res) => {
 		if(!util.validateId(journalId, res)) return;
 		Journals.findById(journalId)
 			.then(journal => {
-				if(!journal) {
-					res.status(404).json({
-						reason: 'not-found',
-						message: 'Journal not found.'
-					});
-					return;
-				}
-				if(journal.user.toString() !== userId) {
-					res.status(401).json({
-						reason: 'unauthorized',
-						message: 'Journal does not belong to user.'
-					});
-					return;
-				}
-
+				if(!validateJournalRequest(journal, userId)) return;
 				res.status(200).json({journal: journal.serialize()});
 			})
 			.catch(err => util.handleApiError(err, res));
@@ -103,20 +107,7 @@ router.get('/entries', (req, res) => {
 
 	Journals.findById(journalId)
 		.then(journal => {
-			if(!journal) {
-				res.status(404).json({
-					reason: 'not-found',
-					message: 'Journal not found.'
-				});
-				return;
-			}
-			if(journal.user.toString() !== userId) {
-				res.status(401).json({
-					reason: 'unauthorized',
-					message: 'Journal does not belong to user.'
-				});
-				return;
-			}
+			if(!validateJournalRequest(journal, userId)) return;
 			
 			const json = filter ? journal.paginate(page, perpage, filter) : journal.paginate(page, perpage);
 			res.status(200).json(json);
@@ -132,20 +123,7 @@ router.post('/entries', jsonParser, (req, res) => {
 
 	Journals.findById(journalId)
 		.then(journal => {
-			if(!journal) {
-				res.status(404).json({
-					reason: 'not-found',
-					message: 'Journal not found.'
-				});
-				return;
-			}
-			if(journal.user.toString() !== userId) {
-				res.status(401).json({
-					reason: 'unauthorized',
-					message: 'Journal does not belong to user.'
-				});
-				return;
-			}
+			if(!validateJournalRequest(journal, userId)) return;
 
 			if(!util.objHasFields(req.body, ['title'])) {
 				res.status(400).json({
@@ -178,20 +156,7 @@ router.delete('/entries', (req, res) => {
 
 	Journals.findById(journalId)
 		.then(journal => {
-			if(!journal) {
-				res.status(404).json({
-					reason: 'not-found',
-					message: 'Journal not found.'
-				});
-				return;
-			}
-			if(journal.user.toString() !== userId) {
-				res.status(401).json({
-					reason: 'unauthorized',
-					message: 'Journal does not belong to user.'
-				});
-				return;
-			}
+			if(!validateJournalRequest(journal, userId)) return;
 
 			const entry = journal.entries.id(entryId);
 			if(entry) 
@@ -210,20 +175,7 @@ router.get('/insights', (req, res) => {
 
 	Journals.findById(journalId)
 		.then(journal => {
-			if(!journal) {
-				res.status(404).json({
-					reason: 'not-found',
-					message: 'Journal not found.'
-				});
-				return;
-			}
-			if(journal.user.toString() !== userId) {
-				res.status(401).json({
-					reason: 'unauthorized',
-					message: 'Journal does not belong to user.'
-				});
-				return;
-			}
+			if(!validateJournalRequest(journal, userId)) return;
 
 			res.status(200).json({insights: journal.insights()});
 		})
