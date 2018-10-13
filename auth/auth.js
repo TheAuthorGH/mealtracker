@@ -25,8 +25,15 @@ passport.use(new JwtStrategy({
 	secretOrKey: config.JWT_SECRET,
 	jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
 	algorithms: ['HS256']
-}, (payload, done) => {
-	done(null, payload.user);
+}, async (payload, done) => {
+	return Users.findById(payload.user.id)
+		.then(user => {
+			if(user)
+				done(null, user);
+			else
+				done(null, false);
+		})
+		.catch(err => done(err));
 }));
 
 const jwtAuth = passport.authenticate('jwt', {session: false, failureRedirect: '/signin'});
