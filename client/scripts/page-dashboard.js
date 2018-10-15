@@ -50,6 +50,9 @@ function updateJournals() {
 }
 
 $(function() {
-	handleDashboardControls();
-	updateJournals();
+	checkAuth()
+		.then(() => {
+			handleDashboardControls();
+			updateJournals();
+		});
 });
