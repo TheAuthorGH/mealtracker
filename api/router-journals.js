@@ -186,7 +186,7 @@ router.put('/entries', jsonParser, (req, res) => {
 				return;
 			};
 
-			const newEntry = {};
+			const newEntry = { _id: req.body.id };
 			const updateableFields = ["title", "description"];
 			
 			for(let field of Object.keys(req.body).filter(k => updateableFields.includes(k)))
@@ -201,7 +201,6 @@ router.put('/entries', jsonParser, (req, res) => {
 			}
 
 			const oldEntry = journal.entries.id(entryId);
-
 			newEntry.date = oldEntry.date;
 
 			oldEntry.remove();
