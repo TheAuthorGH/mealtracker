@@ -132,7 +132,7 @@ router.post('/entries', jsonParser, (req, res) => {
 				});
 				return;
 			}
-			if(req.body.title.length > 20 || req.body.description > 300) {
+			if(req.body.title.length > 20 || req.body.description.length > 300) {
 				res.status(400).json({
 					reason: 'data-invalid',
 					message: 'Invalid entry data: entry title or description too long.'
@@ -162,6 +162,48 @@ router.delete('/entries', (req, res) => {
 			if(entry) 
 				entry.remove();
 			journal.save();
+			res.status(204).end();
+		})
+		.catch(err => util.handleApiError(err, res));
+});
+
+router.put('/entries', jsonParser, (req, res) => {
+	const journalId = req.query.journalid;
+	const userId = req.query.userid;
+	const entryId = req.query.entryid;
+
+	if(!util.validateId(journalId, res) || !util.validateId(userId, res) || !util.validateId(entryId, res)) return;
+
+	Journals.findById(journalId)
+		.then(journal => {
+			if(!validateJournalRequest(journal, userId)) return;
+
+			if(entryId !== req.body.id) {
+				res.status(400).json({
+					reason: "data-invalid",
+					message: "Request query ID and request body ID don't match!"
+				});
+				return;
+			};
+
+			const newEntry = {};
+			const updateableFields = ["title", "description"];
+			
+			for(let field of Object.keys(req.body).filter(k => updateableFields.includes(k)))
+				newEntry[field] = req.body[field];
+
+			if(newEntry.title.length > 20 || newEntry.description.length > 300) {
+				res.status(400).json({
+					reason: 'data-invalid',
+					message: 'Invalid entry data: entry title or description too long.'
+				});
+				return;
+			}
+
+			journal.entries.id(entryId).remove();
+			journal.entries.push(newEntry);
+			journal.save();
+
 			res.status(204).end();
 		})
 		.catch(err => util.handleApiError(err, res));
