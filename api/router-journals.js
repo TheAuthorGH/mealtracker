@@ -200,7 +200,11 @@ router.put('/entries', jsonParser, (req, res) => {
 				return;
 			}
 
-			journal.entries.id(entryId).remove();
+			const oldEntry = journal.entries.id(entryId);
+
+			newEntry.date = oldEntry.date;
+
+			oldEntry.remove();
 			journal.entries.push(newEntry);
 			journal.save();
 
