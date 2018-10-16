@@ -26,7 +26,7 @@ function handleJournalControls() {
 		evt.preventDefault();
 		$.ajax({
 			type: 'POST',
-			url: `/journals/entries?id=${MT_JOURNAL}`,
+			url: `/journals/entries?journalid=${MT_JOURNAL}&userid=${Cookies.get('mt_user')}`,
 			dataType: 'json',
 			contentType: 'application/json',
 			beforeSend: MT_AUTH_BEFORESEND,
@@ -57,7 +57,7 @@ function handleJournalControls() {
 		const entryId = $(this).closest('li').attr('mt-journal-entry-id');
 		$.ajax({
 			type: 'DELETE',
-			url: `/journals/entries?journalid=${MT_JOURNAL}&entryid=${entryId}`,
+			url: `/journals/entries?journalid=${MT_JOURNAL}&userid=${Cookies.get('mt_user')}&entryid=${entryId}`,
 			beforeSend: MT_AUTH_BEFORESEND
 		})
 		.done(updateEntries);
@@ -67,7 +67,7 @@ function handleJournalControls() {
 function updateEntries(page = currentPage) {
 	$.ajax({
 		type: 'GET',
-		url: `/journals?id=${MT_JOURNAL}`,
+		url: `/journals?journalid=${MT_JOURNAL}&userid=${Cookies.get('mt_user')}`,
 		contentType: 'application/json',
 		beforeSend: MT_AUTH_BEFORESEND
 	})
@@ -77,7 +77,7 @@ function updateEntries(page = currentPage) {
 		$('h2').first().text('Journal - ' + journal.title);
 		$.ajax({
 			type: 'GET',
-			url: `/journals/entries?id=${MT_JOURNAL}&perpage=${perpage}&page=${page}`,
+			url: `/journals/entries?journalid=${MT_JOURNAL}&userid=${Cookies.get('mt_user')}&perpage=${perpage}&page=${page}`,
 			contentType: 'application/json',
 			beforeSend: MT_AUTH_BEFORESEND
 		})
@@ -107,9 +107,20 @@ function updateEntries(page = currentPage) {
 				for(let e of entries)
 					$('.mt-journal-entries > ul').append(`
 						<li mt-journal-entry-id="${e.id}">
-							<span>${e.title}</span>
-							<time>${formatDate(new Date(e.date))}</time>
-							<button class="mt-journal-entry-remove mt-button-square"><span class="fas fa-fw fa-times"></span></button>
+							<div>
+								<span>${e.title}</span>
+								<button class="mt-journal-entry-expand mt-button-square"><span class="fas fa-fw fa-eye"></span></button>
+							</div>
+							<div>
+								<div class="mt-journal-entry-details">
+									<p>${e.description}<p>
+									<time>${formatDate(new Date(e.date))}</time>
+								</div>
+								<div class="mt-journal-entry-controls">
+									<button class="mt-journal-entry-edit mt-button-square"><span class="fas fa-fw fa-pencil-alt"></span></button>
+									<button class="mt-journal-entry-remove mt-button-square"><span class="fas fa-fw fa-times"></span></button>
+								</div>
+							</div>
 						</li>
 					`);
 
@@ -129,7 +140,7 @@ function updateEntries(page = currentPage) {
 function updateInsights() {
 	$.ajax({
 		type: 'GET',
-		url: '/journals/insights?id=' + MT_JOURNAL,
+		url: `/journals/insights?journalid=${MT_JOURNAL}&userid=${Cookies.get('mt_user')}`,
 		contentType: 'application/json',
 		beforeSend: MT_AUTH_BEFORESEND
 	})
@@ -142,13 +153,15 @@ function updateInsights() {
 }
 
 $(function() {
-	handleJournalControls();
+	checkAuth().then(() => {
+		handleJournalControls();
 
-	let page = SEARCHPARAMS.get('page');
-	if(page)
-		updateEntries(isNaN(page) ? page : Number(page) - 1);
-	else
-		updateEntries();
-
-	updateInsights();
+		let page = SEARCHPARAMS.get('page');
+		if(page)
+			updateEntries(isNaN(page) ? page : Number(page) - 1);
+		else
+			updateEntries();
+	
+		updateInsights();
+	});
 });
