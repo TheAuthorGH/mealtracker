@@ -173,7 +173,7 @@ describe('MealTracker API', function() {
 				});
 		});
 
-		it('should delete a journal entry on DELETE /entries?journalid=<entryid>&userid=<userid>&entryid=<entryid>', function() {
+		it('should delete a journal entry on DELETE /entries?journalid=<journalid>&userid=<userid>&entryid=<entryid>', function() {
 			let journalId;
 			let userId;
 			let entryId;
@@ -195,6 +195,40 @@ describe('MealTracker API', function() {
 				})
 				.then(function(journal) {
 					expect(journal.entries.id(entryId)).to.be.null;
+				});
+		});
+
+		it('should replace a journal entry on PUT /entries?journalid=<journalid>&userid=<userid>&entryid=<entryid>', function() {
+			let journalId;
+			let userId;
+			let entryId;
+			const newEntry = {
+				title: faker.lorem.word(),
+				description: faker.lorem.words()
+			};
+			return Journals.findOne()
+				.then(function(journal) {
+					journalId = journal._id;
+					userId = journal.user;
+					return journal.entries[0];
+				})
+				.then(function(entry) {
+					entryId = entry._id;
+					newEntry.id = entryId;
+					return chai.request(app)
+						.put(`/journals/entries?journalid=${journalId}&userid=${userId}&entryid=${entryId}`)
+						.send(newEntry);
+				})
+				.then(function(res) {
+					expect(res).to.have.status(204);
+					expect(res.body).to.be.empty;
+					return Journals.findById(journalId);
+				})
+				.then(function(journal) {
+					const entry = journal.entries.id(entryId);
+					expect(entry).to.not.be.null;
+					expect(entry.title).to.equal(newEntry.title);
+					expect(entry.description).to.equal(newEntry.description);
 				});
 		});
 
