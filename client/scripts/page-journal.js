@@ -43,6 +43,8 @@ function handleJournalControls() {
 		.fail(() => window.location.href = '/error');
 	});
 
+	// Pagination Controls
+
 	$('.mt-journal-entries-pagination').on('click', '.mt-journal-entries-pagination-page', function() {
 		window.location.href = `/journal?id=${MT_JOURNAL}&perpage=${perpage}&page=${Number($(this).attr('mt-journal-page')) + 1}`;
 	});
@@ -53,6 +55,8 @@ function handleJournalControls() {
 		window.location.href = `/journal?id=${MT_JOURNAL}&perpage=${perpage}&page=last`;
 	});
 
+	// Entry Controls
+
 	$('.mt-journal-entries > ul').on('click', '.mt-journal-entry-remove', function() {
 		const entryId = $(this).closest('li').attr('mt-journal-entry-id');
 		$.ajax({
@@ -60,7 +64,13 @@ function handleJournalControls() {
 			url: `/journals/entries?journalid=${MT_JOURNAL}&userid=${Cookies.get('mt_user')}&entryid=${entryId}`,
 			beforeSend: MT_AUTH_BEFORESEND
 		})
-		.done(updateEntries);
+		.done(() => {
+			updateEntries();
+			updateInsights();
+		});
+	});
+	$('.mt-journal-entries > ul').on('click', '.mt-journal-entry-expand', function() {
+		$(this).closest('.mt-journal-entries > ul > li').find('div:not(:first-child)').toggle();
 	});
 }
 
@@ -129,6 +139,7 @@ function updateEntries(page = currentPage) {
 				if(currentPage === 0)
 					$('.mt-journal-entries-pagination-first').attr('disabled', true).addClass('mt-selected');
 
+				$('.mt-journal-entries > ul > li div:not(:first-child)').hide().prop('hidden', true);
 				$('.mt-journal-entries').show();
 			}
 		})
