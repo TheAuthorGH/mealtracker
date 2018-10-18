@@ -18,7 +18,8 @@ entrySchema.methods.serialize = function() {
 const journalSchema = mongoose.Schema({
 	user: {type: mongoose.Schema.Types.ObjectId, required: true},
 	title: {type: String, required: true},
-	entries: [entrySchema]
+	entries: [entrySchema],
+	creationDate: {type: Date, required: true, default: new Date()}
 });
 
 journalSchema.methods.serialize = function() {
@@ -56,8 +57,12 @@ journalSchema.methods.insights = function() {
 	const entries = this.entries;
 	const insights = [];
 
-	insights.push(`<span class="mt-journal-insights-highlight">${entries.length}</span> entries in all time`);
-	insights.push(`<span class="mt-journal-insights-highlight">${entries.filter(e => new Date() - new Date(e.date) < 86400000).length}</span> entries in the last 24 hours`);
+	insights.push(`<span class="mt-journal-insights-highlight">${entries.length}</span> entries in all time.`);
+	insights.push(`<span class="mt-journal-insights-highlight">
+		${entries.filter(e => {now = new Date(); return now.getDay() === e.date.getDay() && now.getMonth() === e.date.getMonth() && now.getYear() === e.date.getYear()}).length}
+		</span> entries today.`);
+	insights.push(`<span class="mt-journal-insights-highlight">${Math.ceil((new Date() - this.creationDate)/86400000)}</span> days since journal creation.`);
+	insights.push(`<span class="mt-journal-insights-highlight">${entries.length/Math.ceil((new Date() - this.creationDate)/86400000)}</span> average entries per day.`);
 
 	return insights;
 };
