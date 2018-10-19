@@ -123,8 +123,8 @@ function updateEntries(page = currentPage) {
 							</div>
 							<div>
 								<div class="mt-journal-entry-details">
-									<p>${e.description}<p>
-									<time>${formatDate(new Date(e.date))}</time>
+									<time><span class="far fa-clock fa-fw"></span> ${formatDate(new Date(e.date))}</time>
+									<em>&#8220${e.description}&#8221<em>
 								</div>
 								<div class="mt-journal-entry-controls">
 									<button class="mt-journal-entry-edit mt-button-square"><span class="fas fa-fw fa-pencil-alt"></span></button>

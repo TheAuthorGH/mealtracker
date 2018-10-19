@@ -16,6 +16,10 @@ form.mt-journal-addentry > * {
 	margin: 4px 0;
 }
 
+form.mt-journal-addentry textarea {
+	min-height: 80px;
+}
+
 .mt-journal-entries > section {
 	padding: 16px;
 }
@@ -61,7 +65,13 @@ form.mt-journal-addentry > * {
 	padding: 16px;
 
 	display: flex;
+	flex-direction: column;
+}
+
+.mt-journal-entries > ul > li > div {
+	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .mt-journal-entries > ul > li:nth-child(even) {
@@ -70,6 +80,25 @@ form.mt-journal-addentry > * {
 
 .mt-journal-entries > ul > li:hover {
 	background-color: #FFF0C0;
+}
+
+.mt-journal-entry-details {
+	color: #777;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.mt-journal-entry-details > * {
+	margin: 4px 0px;
+}
+
+.mt-journal-entry-controls button {
+	background-color: inherit;
+	color: #C50;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
 }
 
 .mt-journal-noentries > p {
