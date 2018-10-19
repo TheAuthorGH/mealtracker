@@ -139,7 +139,10 @@ router.post('/entries', jsonParser, (req, res) => {
 				});
 				return;
 			}
+			
 			req.body.date = req.body.date ? new Date(req.body.date) : new Date();
+			req.body.positive = Boolean(req.body.positive);
+
 			journal.entries.push(req.body);
 			journal.save();
 			res.status(201).json({entry: journal.entries[journal.entries.length - 1].serialize()});
@@ -187,10 +190,11 @@ router.put('/entries', jsonParser, (req, res) => {
 			};
 
 			const newEntry = { _id: req.body.id };
-			const updateableFields = ["title", "description"];
+			const updateableFields = ["title", "description", "positive"];
 			
 			for(let field of Object.keys(req.body).filter(k => updateableFields.includes(k)))
 				newEntry[field] = req.body[field];
+			newEntry.positive = Boolean(newEntry.positive);
 
 			if(newEntry.title.length > 20 || newEntry.description.length > 300) {
 				res.status(400).json({
@@ -201,6 +205,7 @@ router.put('/entries', jsonParser, (req, res) => {
 			}
 
 			const oldEntry = journal.entries.id(entryId);
+			
 			newEntry.date = oldEntry.date;
 
 			oldEntry.remove();
