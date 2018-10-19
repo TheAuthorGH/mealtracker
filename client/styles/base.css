@@ -9,8 +9,14 @@ body {
 	align-items: center;
 }
 
-h1, h2, h3, h4, h5 {
+/* General */
+
+strong, h1, h2, h3, h4, h5 {
 	font-weight: bold;
+}
+
+em {
+	font-style: italic;
 }
 
 h2 {
@@ -32,8 +38,6 @@ a {
 a:hover, a:focus {
 	color: #E95;
 }
-
-/* General */
 
 input[type="text"], input[type="email"], input[type="password"], textarea {
 	padding: 4px;
