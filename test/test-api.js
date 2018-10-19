@@ -40,7 +40,8 @@ function fakeJournalEntry() {
 	return {
 		title: faker.lorem.word(),
 		date: new Date(),
-		description: faker.lorem.words()
+		description: faker.lorem.words(),
+		positive: true
 	};
 }
 
@@ -121,9 +122,11 @@ describe('MealTracker API', function() {
 					expect(res).to.have.status(200);
 					expect(res).to.be.json;
 					expect(res.body).to.include.keys('journal');
-					expect(res.body.journal).to.include.keys('id', 'user', 'title', 'entryAmount');
-					expect(res.body.journal.user).to.equal(journal.user.toString());
-					expect(res.body.journal.title).to.equal(journal.title.toString());
+
+					const journal = res.body.journal;
+					expect(journal).to.include.keys('id', 'user', 'title', 'entryAmount');
+					expect(journal.user).to.equal(journal.user.toString());
+					expect(journal.title).to.equal(journal.title.toString());
 				});
 		});
 
@@ -135,9 +138,11 @@ describe('MealTracker API', function() {
 					expect(res).to.have.status(201);
 					expect(res).to.be.json;
 					expect(res.body).to.include.keys('journal');
-					expect(res.body.journal).to.include.keys('id', 'user', 'title', 'entryAmount');
-					expect(res.body.journal.user).to.equal(modelJournal.user.toString());
-					expect(res.body.journal.title).to.equal(modelJournal.title);
+
+					const journal = res.body.journal;
+					expect(journal).to.include.keys('id', 'user', 'title', 'entryAmount');
+					expect(journal.user).to.equal(modelJournal.user.toString());
+					expect(journal.title).to.equal(modelJournal.title);
 				});
 		});
 
@@ -153,6 +158,13 @@ describe('MealTracker API', function() {
 					expect(res.body).to.include.keys('entries');
 					expect(res.body.entries).to.be.an('array');
 					expect(res.body.entries.length).to.equal(4);
+
+					const entry = res.body.entries[0];
+					expect(entry).to.include.keys('id', 'title', 'date', 'description', 'positive');
+					expect(entry.id).to.be.a('string');
+					expect(entry.title).to.be.a('string');
+					expect(entry.description).to.be.a('string');
+					expect(entry.positive).to.equal(true);
 				});
 		});
 
@@ -167,9 +179,11 @@ describe('MealTracker API', function() {
 					expect(res).to.have.status(201);
 					expect(res).to.be.json;
 					expect(res.body).to.include.keys('entry');
-					expect(res.body.entry).to.include.keys('id', 'title', 'date', 'description');
-					expect(res.body.entry.title).to.equal(modelEntry.title);
-					expect(res.body.entry.description).to.equal(modelEntry.description);
+
+					const entry = res.body.entry;
+					expect(entry).to.include.keys('id', 'title', 'date', 'description');
+					expect(entry.title).to.equal(modelEntry.title);
+					expect(entry.description).to.equal(modelEntry.description);
 				});
 		});
 
@@ -242,9 +256,11 @@ describe('MealTracker API', function() {
 					expect(res).to.have.status(200);
 					expect(res).to.be.json;
 					expect(res.body).to.include.keys('insights');
-					expect(res.body.insights).to.be.an('array');
-					expect(res.body.insights.length).to.be.at.least(0);
-					expect(res.body.insights[0]).to.be.a('string');
+					
+					const insights = res.body.insights;
+					expect(insights).to.be.an('array');
+					expect(insights.length).to.be.at.least(0);
+					expect(insights[0]).to.be.a('string');
 				});
 		});
 
