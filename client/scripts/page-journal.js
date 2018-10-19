@@ -32,7 +32,8 @@ function handleJournalControls() {
 			beforeSend: MT_AUTH_BEFORESEND,
 			data: JSON.stringify({
 				title: $('#mt-journal-addentry-title').val().trim(),
-				description: $('#mt-journal-addentry-description').val().trim()
+				description: $('#mt-journal-addentry-description').val().trim(),
+				positive: $('#mt-journal-addentry-positive').is(':checked')
 			})
 		})
 		.done(() => {
