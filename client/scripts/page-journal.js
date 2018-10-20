@@ -15,13 +15,22 @@ function clearEntryForm() {
 }
 
 function handleJournalControls() {
+
+	// Entry Form Controls
+
 	$('.mt-journal-addentry').hide().prop('hidden', true);
+
 	$('.mt-journal-addentry-open').click(function() {
 		$('.mt-journal-addentry').show().prop('hidden', false);
 		$('.mt-journal-noentries, .mt-journal-entries').hide().prop('hidden', true);
 		clearEntryForm();
 	});
-
+	$('.mt-journal-addentry-close').click(function() {
+		$('.mt-journal-addentry').hide().prop('hidden', true);
+		clearEntryForm();
+		updateEntries();
+		updateInsights();
+	});
 	$('.mt-journal-addentry').submit(function(evt) {
 		evt.preventDefault();
 		$.ajax({
