@@ -64,7 +64,8 @@ journalSchema.methods.insights = function() {
 		${entries.filter(e => {now = new Date(); return now.getDay() === e.date.getDay() && now.getMonth() === e.date.getMonth() && now.getYear() === e.date.getYear()}).length}
 		</span> entries today.`);
 	insights.push(`<span class="mt-journal-insights-highlight">${entries.length/Math.ceil((new Date() - this.creationDate)/86400000)}</span> average entries per day.`);
-	insights.push(`<span class="mt-journal-insights-highlight">${entries.filter(e => e.positive).length}</span> positive entries.`);
+	insights.push(`<span class="mt-journal-insights-highlight">${entries.filter(e => e.positive).length}</span> healthy entries.`);
+	insights.push(`<span class="mt-journal-insights-highlight">${Math.round((entries.filter(e => e.positive).length * 100)/entries.length)}%</span> of entries are healthy.`);
 	insights.push(`<span class="mt-journal-insights-highlight">${Math.ceil((new Date() - this.creationDate)/86400000)}</span> days since journal creation.`);
 
 	return insights;
