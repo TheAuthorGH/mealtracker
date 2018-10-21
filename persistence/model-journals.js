@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const entrySchema = mongoose.Schema({
 	title: {type: String, required: true},
 	date: {type: Date, required: true},
-	description: {type: String, default: 'No description.'},
+	description: {type: String, default: null},
 	positive: {type: Boolean, default: false}
 });
 

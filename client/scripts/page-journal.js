@@ -33,6 +33,11 @@ function handleJournalControls() {
 	});
 	$('.mt-journal-addentry').submit(function(evt) {
 		evt.preventDefault();
+
+		let description = $('#mt-journal-addentry-description').val().trim();
+		if(!description)
+			description = null;
+
 		$.ajax({
 			type: 'POST',
 			url: `/journals/entries?journalid=${MT_JOURNAL}&userid=${Cookies.get('mt_user')}`,
@@ -41,7 +46,7 @@ function handleJournalControls() {
 			beforeSend: MT_AUTH_BEFORESEND,
 			data: JSON.stringify({
 				title: $('#mt-journal-addentry-title').val().trim(),
-				description: $('#mt-journal-addentry-description').val().trim(),
+				description: description,
 				positive: $('#mt-journal-addentry-positive').is(':checked')
 			})
 		})
@@ -134,8 +139,8 @@ function updateEntries(page = currentPage) {
 							<div>
 								<div class="mt-journal-entry-details">
 									<time><span class="far fa-clock fa-fw"></span> ${formatDate(new Date(e.date))}</time>
-									<p><em>&#8220${e.description}&#8221</em></p>
-									${e.positive ? '<p class="mt-journal-entry-details-positive"><span class="fas fa-check"></span> Marked as healthy</p>' : '<p class="mt-journal-entry-details-negative"><span class="fas fa-times"></span> Not marked as healthy</p>'}
+									<p><span class="fas fa-info-circle fa-fw"></span> ${e.description ? '<em>&#8220' + e.description + '&#8221</em>' : 'No description.'}</p>
+									${e.positive ? '<p class="mt-journal-entry-details-positive"><span class="fas fa-check fa-fw"></span> Marked as healthy</p>' : '<p class="mt-journal-entry-details-negative"><span class="fas fa-times fa-fw"></span> Not marked as healthy</p>'}
 								</div>
 								<div class="mt-journal-entry-controls">
 									<button class="mt-journal-entry-edit mt-button-square"><span class="fas fa-fw fa-pencil-alt"></span></button>

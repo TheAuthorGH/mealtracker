@@ -132,7 +132,7 @@ router.post('/entries', jsonParser, (req, res) => {
 				});
 				return;
 			}
-			if(req.body.title.length > 20 || req.body.description.length > 300) {
+			if(req.body.title.length > 20 || (req.body.description && req.body.description.length > 300)) {
 				res.status(400).json({
 					reason: 'data-invalid',
 					message: 'Invalid entry data: entry title or description too long.'
