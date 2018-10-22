@@ -20,9 +20,15 @@ function handleDashboardControls() {
 		.fail(() => window.location.href = '/error');
 	});
 
-	$('.mt-dashboard-journals ul').on('click', 'li', function() {
-		window.location.href = '/journal?id=' + $(this).attr('mt-journal-id');
-	});
+	$('.mt-dashboard-journals ul')
+		.on('keyup', 'li', function(evt) {
+			evt.preventDefault();
+			if(evt.keyCode === 13)
+				$(this).click();
+		})
+		.on('click', 'li', function() {
+			window.location.href = '/journal?id=' + $(this).attr('mt-journal-id');
+		});
 }
 
 function updateJournals() {
@@ -42,7 +48,7 @@ function updateJournals() {
 		});
 		for(let j of journals)
 			list.append(`
-				<li mt-journal-id="${j.id}">
+				<li mt-journal-id="${j.id}" tabindex="0">
 					<span>${j.title}</span>
 				</li>`);
 	})
