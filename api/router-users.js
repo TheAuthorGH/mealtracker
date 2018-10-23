@@ -31,30 +31,32 @@ router.post('/', jsonParser, (req, res) => {
 		});
 		return;
 	}
+	if(!req.body.email.includes('@')) {
+		res.status(400).json({
+			reason: 'data-invalid',
+			message: 'Invalid email address.'
+		});
+	}
+	
 	Users.findOne({email: req.body.email})
 		.then(user => {
-			if(user) {
+			if(user)
 				res.status(400).json({
 					reason: 'email-taken',
 					message: 'Email address is already in use!'
 				});
-				return;
-			}
-			return bcrypt.hash(req.body.password, 10);
+			else 
+				return bcrypt.hash(req.body.password, 10);
 		})
 		.then(hash => {
 			if(!hash)
-				return
-			if(!req.body.email.includes('@')) {
-				res.status(400).json({
-					reason: 'data-invalid',
-					message: 'Invalid email address.'
-				});
-			}
+				return;
 			req.body.password = hash;
-			Users.create(req.body)
-				.then(user => res.status(201).json({user: user.serialize()}))
-				.catch(err => util.handleApiError(err, res));
+			return Users.create(req.body);
+		})
+		.then(user => { 
+			if(user)
+				res.status(201).json({user: user.serialize()});
 		})
 		.catch(err => util.handleApiError(err, res));
 });
