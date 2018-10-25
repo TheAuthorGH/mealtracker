@@ -33,7 +33,17 @@ function handleSignupControls() {
 			data: JSON.stringify({ email: email, password: password })
 		})
 		.done(res => {
-			window.location.href = '/signin'; // replace with dashboard - add jwt cookie
+			$.ajax({
+				type: 'POST',
+				url: '/auth/login',
+				dataType: 'json',
+				contentType: 'application/json',
+				data: JSON.stringify({email: email, password: password})
+			})
+			.done(res => {
+				Cookies.set('mt_jwt', res, {expires: 1});
+				window.location.href = '/dashboard';
+			});
 		})
 		.fail(res => {
 			if(res.status === 400 && res.responseJSON.reason === 'email-taken') {
