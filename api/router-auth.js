@@ -1,6 +1,6 @@
 'use strict';
 
-const {localAuth, jwtAuth, createAuthToken} = require('./auth');
+const {localAuth, jwtAuth, createAuthToken} = require('../auth');
 
 const router = require('express').Router();
 

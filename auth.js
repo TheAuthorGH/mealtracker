@@ -1,5 +1,7 @@
-const Users = require('../persistence/model-users');
-const config = require('../config');
+'use strict';
+
+const Users = require('./persistence/model-users');
+const config = require('./config');
 const passport = require('passport');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const { Strategy: LocalStrategy} = require('passport-local');

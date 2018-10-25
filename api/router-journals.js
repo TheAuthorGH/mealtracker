@@ -2,7 +2,7 @@
 
 const config = require('../config');
 const util = require('./api-util');
-const {jwtAuth} = require('../auth/auth');
+const {jwtAuth} = require('../auth');
 const jsonParser = require('body-parser').json();
 const Journals = require('../persistence/model-journals');
 const Users = require('../persistence/model-users');

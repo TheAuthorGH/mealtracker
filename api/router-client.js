@@ -1,9 +1,12 @@
+'use strict';
+
 const express = require('express');
+const path = require('path');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-	res.sendFile(`${__dirname}/index.html`);
+	res.sendFile(`${path.dirname(__dirname)}/client/index.html`);
 });
 
 router.get('/:action', (req, res, next) => {
@@ -14,7 +17,7 @@ router.get('/:action', (req, res, next) => {
 		case 'signup':
 		case 'error':
 		case 'journal':
-			res.sendFile(`${__dirname}/${req.params.action}.html`);
+			res.sendFile(`${path.dirname(__dirname)}/client/${req.params.action}.html`);
 			break;
 		default:
 			next();
