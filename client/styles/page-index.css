@@ -1,3 +1,9 @@
+main {
+    justify-content: center;
+    height: 75vh;
+    max-width: 400px;
+}
+
 main > section {
     display: flex;
     flex-direction: column;
@@ -15,4 +21,11 @@ a.mt-signup {
 
 a.mt-signup:hover, a.mt-signup:focus {
     background-color: #D62;
+}
+
+p.mt-hypeline {
+    font-size: 20px;
+    text-align: center;
+    color: #555;
+    margin: 16px 0px;
 }
