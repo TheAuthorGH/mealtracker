@@ -20,6 +20,19 @@ form.mt-journal-addentry textarea {
 	min-height: 80px;
 }
 
+form.mt-journal-editentry {
+	display: flex;
+	flex-direction: column;
+}
+
+form.mt-journal-editentry > * {
+	margin: 4px 0;
+}
+
+form.mt-journal-editentry textarea {
+	min-height: 80px;
+}
+
 .mt-journal-entries > section {
 	padding: 16px;
 }
@@ -62,7 +75,7 @@ form.mt-journal-addentry textarea {
 }
 
 .mt-journal-entries > ul > li {
-	padding: 16px;
+	padding: 8px 2px 8px 16px;
 
 	display: flex;
 	flex-direction: column;
@@ -82,6 +95,12 @@ form.mt-journal-addentry textarea {
 	background-color: #FFF0C0;
 }
 
+button.mt-journal-entry-expand {
+	color: #C50;
+	background-color: inherit;
+	font-size: 22px;
+}
+
 .mt-journal-entry-details {
 	color: #777;
 
@@ -93,19 +112,34 @@ form.mt-journal-addentry textarea {
 	margin: 4px 0px;
 }
 
+div.mt-journal-entry-controls {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	margin: 0px 8px;
+}
+
 .mt-journal-entry-controls button {
-	background-color: inherit;
-	color: #C50;
-	font-weight: bold;
-	margin: 0px;
-	padding: 0px;
+	background-color: #C50;
+	color: #FFF;
+	font-size: 12px;
+	margin: 4px 0px;
+	padding: 6px;
+}
+
+.mt-journal-noentries {
+	text-align: center;
+	padding: 15vh 0px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .mt-journal-noentries > p {
 	color: #888;
 	font-size: 20px;
-	text-align: center;
-	padding: 8px;
 }
 
 .mt-journal-insights {

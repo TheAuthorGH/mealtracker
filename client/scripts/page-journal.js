@@ -77,7 +77,14 @@ function handleJournalControls() {
 	// Entry Controls
 
 	$('.mt-journal-entries').on('click', '.mt-journal-entry-expand', function() {
-		$(this).closest('.mt-journal-entries li').find('div:not(:first-child)').toggle();
+		const content = $(this).closest('.mt-journal-entries li').find('div:not(:first-child)');
+		if(content.is(':hidden')) {
+			content.show().prop('hidden', false);
+			$(this).html('<span class="fas fa-fw fa-angle-up"></span>').attr('title', 'Show less');
+		} else {
+			content.hide().prop('hidden', true);
+			$(this).html('<span class="fas fa-fw fa-angle-down"></span>').attr('title', 'Show more');
+		}
 	});
 	$('.mt-journal-entries').on('click', '.mt-journal-entry-remove', function() {
 		const entryId = $(this).closest('.mt-journal-entries li').attr('mt-journal-entry-id');
@@ -154,17 +161,17 @@ function updateEntries(page = currentPage) {
 			$('.mt-journal-entries > ul, .mt-journal-entries-pagination').empty();
 
 			const pagination = $('.mt-journal-entries-pagination');
-			pagination.append('<button class="mt-journal-entries-pagination-first"><span class="fas fa-angle-double-left"></span></button>');
+			pagination.append('<button class="mt-journal-entries-pagination-first" title="First page"><span class="fas fa-angle-double-left"></span></button>');
 			for(let c = -2; c < 3; c++) {
 				const p = currentPage + c;
 				let button;
 				if(p < 0 || p >= res.pages)
-					button = '<button class="mt-empty" disabled></button>';
+					button = '<button class="mt-empty" title="No page here" disabled></button>';
 				else
-					button = `<button class="mt-journal-entries-pagination-page${p == currentPage ? ' mt-selected' : ''}" mt-journal-page="${p}">${p + 1}</button>`;
+					button = `<button class="mt-journal-entries-pagination-page${p == currentPage ? ' mt-selected' : ''}" title="Page ${p + 1}" mt-journal-page="${p}">${p + 1}</button>`;
 				pagination.append(button);
 			}
-			pagination.append('<button class="mt-journal-entries-pagination-last"><span class="fas fa-angle-double-right"></span></button>');
+			pagination.append('<button class="mt-journal-entries-pagination-last" title="Last page"><span class="fas fa-angle-double-right"></span></button>');
 
 			const entries = res.entries;
 			if(entries.length === 0) {
@@ -175,7 +182,7 @@ function updateEntries(page = currentPage) {
 						<li mt-journal-entry-id="${e.id}">
 							<div>
 								<span>${e.title}</span>
-								<button class="mt-journal-entry-expand mt-button-square"><span class="fas fa-fw fa-eye"></span></button>
+								<button class="mt-journal-entry-expand mt-button-square"><span class="fas fa-fw fa-angle-down"></span></button>
 							</div>
 							<div>
 
@@ -189,13 +196,13 @@ function updateEntries(page = currentPage) {
 
 								<div class="mt-journal-entry-details">
 									<time><span class="far fa-clock fa-fw"></span> ${formatDate(new Date(e.date))}</time>
-									<p><span class="fas fa-info-circle fa-fw"></span> ${e.description ? '<em>&#8220' + e.description + '&#8221</em>' : 'No description.'}</p>
+									<p style="line-height: 1.2;"><span class="fas fa-info-circle fa-fw"></span> ${e.description ? '<em>&#8220' + e.description + '&#8221</em>' : 'No description.'}</p>
 									${e.positive ? '<p class="mt-journal-entry-details-positive"><span class="fas fa-check fa-fw"></span> Marked as healthy</p>' : '<p class="mt-journal-entry-details-negative"><span class="fas fa-times fa-fw"></span> Not marked as healthy</p>'}
 								</div>
 
 								<div class="mt-journal-entry-controls">
-									<button class="mt-journal-entry-edit mt-button-square"><span class="fas fa-fw fa-pencil-alt"></span></button>
-									<button class="mt-journal-entry-remove mt-button-square"><span class="fas fa-fw fa-times"></span></button>
+									<button class="mt-journal-entry-edit mt-button-square" title="Edit this entry"><span class="fas fa-fw fa-pencil-alt"></span></button>
+									<button class="mt-journal-entry-remove mt-button-square" title="Remove this entry"><span class="fas fa-fw fa-times"></span></button>
 								</div>
 							</div>
 						</li>

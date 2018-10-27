@@ -53,12 +53,12 @@
 		
 		<h2></h2>
 
-		<button class="mt-journal-addentry-open"><span class="fas fa-pencil-alt"></span> New Entry</button>
+		<button class="mt-journal-addentry-open" title="Write new entry"><span class="fas fa-pencil-alt"></span> Write Entry</button>
 		<form class="mt-journal-addentry">
-			<button class="mt-journal-addentry-close" title="close form"><span class="fas fa-times"></span></button>
+			<button class="mt-journal-addentry-close" title="Close form"><span class="fas fa-times"></span></button>
 			<label for="mt-journal-addentry-title"><span>Title: </span><input type="text" id="mt-journal-addentry-title" placeholder="Breakfast" maxlength="20" required></label>
 			<label for="mt-journal-addentry-description">Description:</label>
-			<textarea id="mt-journal-addentry-description" placeholder="Mac & Cheese." maxlength="300"></textarea>
+			<textarea id="mt-journal-addentry-description" placeholder="Describe your Meal here." maxlength="300"></textarea>
 			<label for="mt-journal-addentry-positive"><input type="checkbox" id="mt-journal-addentry-positive"/><span> Mark this meal as healthy</span></label>
 			<button type="submit">Done</button>
 		</form>
@@ -69,6 +69,7 @@
 		</section>
 
 		<section class="mt-journal-noentries" role="region">
+			<span class="fas fa-question fa-centerpiece"></span>
 			<p>Nothing to show yet! Add a new entry above!</p>
 		</section>
 
