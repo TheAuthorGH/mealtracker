@@ -182,7 +182,7 @@ function updateEntries(page = currentPage) {
 						<li mt-journal-entry-id="${e.id}">
 							<div>
 								<span>${e.title}</span>
-								<button class="mt-journal-entry-expand mt-button-square"><span class="fas fa-fw fa-angle-down"></span></button>
+								<button class="mt-journal-entry-expand mt-button-square" title="Show more"><span class="fas fa-fw fa-angle-down"></span></button>
 							</div>
 							<div>
 

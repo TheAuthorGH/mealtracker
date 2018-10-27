@@ -49,14 +49,14 @@ form.mt-journal-editentry textarea {
 	padding: 8px;
 	width: 32px;
 	height: 32px;
-	color: #C50;
+	color: #C40;
 	background-color: inherit;
 	border: 1px #D62 solid;
 }
 
 .mt-journal-entries-pagination > button.mt-selected {
 	color: #FFF;
-	background-color: #D62;
+	background-color: #C50;
 }
 
 .mt-journal-entries-pagination > button.mt-empty {
@@ -96,7 +96,7 @@ form.mt-journal-editentry textarea {
 }
 
 button.mt-journal-entry-expand {
-	color: #C50;
+	color: #C40;
 	background-color: inherit;
 	font-size: 22px;
 }
@@ -121,7 +121,7 @@ div.mt-journal-entry-controls {
 }
 
 .mt-journal-entry-controls button {
-	background-color: #C50;
+	background-color: #C40;
 	color: #FFF;
 	font-size: 12px;
 	margin: 4px 0px;
@@ -153,7 +153,7 @@ div.mt-journal-entry-controls {
 
 .mt-journal-insights .mt-journal-insights-highlight {
 	font-size: 24px;
-	color: #C50;
+	color: #C40;
 }
 
 @media only screen and (min-width: 520px) {
