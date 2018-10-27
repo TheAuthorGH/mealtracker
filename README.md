@@ -29,6 +29,7 @@ User properties:
 - email: Unique and used for auth.
 - password: Used for auth, but never exposed by the API after set.
 
+Operations:
 - GET /users/?userid: Returns superficial information about a user.
 - POST /users: Allows you to create a user. Requires providing an email and a password.
 
@@ -41,6 +42,7 @@ Journal Properties:
 - title: Displayed to the client for aesthetics, but not unique.
 - creationDate: Used to generate certain insight messages.
 
+Operations:
 - GET /journals/?userid&journalid: Gets a specific journal's superficial information.
 - POST /journals/?userid: Creates a new journal with the specified title.
 
@@ -54,7 +56,6 @@ Entry Properties:
 - positive: A boolean property that marks an entry as healthy or otherwise.
 
 Operations:
-
 - GET /journals/entries/?userid&journalid&perpage&page&search: Returns paginated entries, sorted by date.
 - POST /journals/entries/?userid&journalid: Pushes an entry to a journal. Requires the entry's title, description and positivity.
 - PUT /journals/entries/?userid&journalid&entryid: Updates an entry. You can omit fields in the request's body to leave them unchanged.
