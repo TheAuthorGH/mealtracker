@@ -6,6 +6,24 @@ _MealTracker_ is a web application that lets you keep a data-rich journal of wha
 
 You can use a live demo of this app [here](https://agile-ridge-29125.herokuapp.com/).
 
+## Screenshots
+
+![Screenshot of the index page](https://github.com/TheAuthorGH/mealtracker/blob/master/screenshots/1.PNG)
+
+The index page.
+
+![Screenshot of the signup page](https://github.com/TheAuthorGH/mealtracker/blob/master/screenshots/2.PNG)
+
+The signup page.
+
+![Screenshot of the entry form](https://github.com/TheAuthorGH/mealtracker/blob/master/screenshots/3.PNG)
+
+Adding a new journal entry.
+
+![Screenshot of journal insights](https://github.com/TheAuthorGH/mealtracker/blob/master/screenshots/4.PNG)
+
+Viewing journal insights.
+
 ## For Developers
 
 MealTracker is a fullstack web application.
