@@ -102,7 +102,7 @@ button.mt-journal-entry-expand {
 }
 
 .mt-journal-entry-details {
-	color: #777;
+	color: #676767;
 
 	display: flex;
 	flex-direction: column;
@@ -138,12 +138,12 @@ div.mt-journal-entry-controls {
 }
 
 .mt-journal-noentries > p {
-	color: #888;
+	color: #777;
 	font-size: 20px;
 }
 
 .mt-journal-insights {
-	color: #777;
+	color: #656565;
 }
 
 .mt-journal-insights > ul > li {
